@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
 use App\Category;
-
+use App\User as Vendor;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $categories = array();
         $parents = Category::where('parent', null)->get();
-        
         foreach($parents as $index=>$parent){
             $childrens = Category::where('parent', $parent->id)->get();
             if(count($childrens) > 0){
@@ -42,7 +41,10 @@ class AppServiceProvider extends ServiceProvider
             }
         }
        
-
-        View::share('AppCategories', $categories);
+        $data = array(
+            'AppCategories' => $categories,
+            'AppTopVendors' => Vendor::with('profile')->get()
+        );
+        View::share($data);
     }
 }

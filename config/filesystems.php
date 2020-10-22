@@ -44,7 +44,7 @@ return [
     'disks' => [
         'admin' => [
             'driver' => 'local',
-            'root' => str_replace('nonameshop_vendor','nonameshop',storage_path('app')),
+            'root' => str_replace('capcaprs','capcaprs_admin',storage_path('app')),
             'url' => env('APP_URL_ADMIN'),
             'visibility' => 'public',
         ],

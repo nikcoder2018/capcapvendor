@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'CapCap') }}</title>
 
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
     
@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{asset('css/red-color.css')}}">
     <link rel="stylesheet" href="{{asset('css/yellow-color.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+
+    @yield('stylesheets')
 </head>
 <body itemscope>
     <main>

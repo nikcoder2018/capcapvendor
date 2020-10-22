@@ -1,6 +1,36 @@
 @extends('layouts.app')
-
+@section('stylesheets')
+    <style>
+        .page-title-wrapper{
+            display: flex !important;
+            justify-content: center !important;
+        }
+    </style>
+@endsection
 @section('content')
+<section>
+    <div class="block">
+        <div class="fixed-bg" style="background-image: url({{asset('images/topbg.jpg')}});"></div>
+        <div class="page-title-wrapper text-center">
+            <div class="col-md-8 col-sm-12 col-lg-8">
+                <div class="page-title-inner">
+                    <h1 itemprop="headline">Search your favourite restaurant</h1>
+                    <form class="restaurant-search-form brd-rd2">
+                        <div class="row mrg10">
+                            <div class="col-md-10 col-sm-9 col-lg-9 col-xs-12">
+                                <div class="input-field brd-rd2"><input class="brd-rd2" type="text" placeholder="Restaurant Name" value="{{$search}}"></div>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-lg-3 col-xs-12">
+                                <button class="brd-rd2 red-bg" type="submit">SEARCH</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="bread-crumbs-wrapper">
     <div class="container">
         <ol class="breadcrumb">
@@ -19,12 +49,26 @@
                     <div class="col-md-12 col-sm-12 col-lg-12">
                         <div class="top-restaurants-wrapper">
                         <ul class="restaurants-wrapper style2">
-                            <li class="wow bounceIn" data-wow-delay="0.2s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 1" itemprop="url"><img src="{{asset('images/resource/top-restaurant1.png')}}" alt="top-restaurant1.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.4s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 2" itemprop="url"><img src="{{asset('images/resource/top-restaurant2.png')}}" alt="top-restaurant2.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.6s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 3" itemprop="url"><img src="{{asset('images/resource/top-restaurant3.png')}}" alt="top-restaurant3.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.8s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 4" itemprop="url"><img src="{{asset('images/resource/top-restaurant4.png')}}" alt="top-restaurant4.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="1s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 5" itemprop="url"><img src="{{asset('images/resource/top-restaurant5.png')}}" alt="top-restaurant5.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="1.2s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 5" itemprop="url"><img src="{{asset('images/resource/top-restaurant6.png')}}" alt="top-restaurant6.png" itemprop="image"></a></div></li>
+                            @php $delay = 0; @endphp
+                            @if(count($AppTopVendors) > 0)
+                                @foreach($AppTopVendors as $vendor)
+                                    <li class="wow bounceIn" data-wow-delay="{{$delay+=0.2}}s">
+                                        <div class="top-restaurant">
+                                            <a class="brd-rd50" href="{{route('vendors.details', $vendor->id)}}" title="{{$vendor->vendor_name}}" itemprop="url">
+                                                @if($vendor->profile != null)
+                                                    @if($vendor->profile->avatar != null)
+                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                    @else 
+                                                        <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                    @endif
+                                                @else 
+                                                <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                @endif
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif                        
                         </ul>
                     </div>
                         <div class="sec-wrapper top-padd80">
@@ -70,7 +114,16 @@
                                                 <div class="col-md-6 col-sm-6 col-lg-6">
                                                     <div class="featured-restaurant-box with-bg style2 brd-rd12 wow fadeIn" data-wow-delay="0.1s">
                                                         <div class="featured-restaurant-thumb">
-                                                            <a href="{{route('vendors.details', $vendor->id)}}" title="" itemprop="url"><img src="{{asset('images/resource/most-popular-img1.png')}}" alt="most-popular-img1.png" itemprop="image"></a>
+                                                            <a href="{{route('vendors.details', $vendor->id)}}" title="" itemprop="url">
+                                                                @if($vendor->profile != null)
+                                                                    @if($vendor->profile->avatar != null)
+                                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                                    @else 
+                                                                    <img src="{{asset('images/resource/most-popular-img1.png')}}" itemprop="image">                                                                    @endif
+                                                                @else 
+                                                                <img src="{{asset('images/resource/most-popular-img1.png')}}" itemprop="image">
+                                                                @endif
+                                                            </a>
                                                         </div>
                                                         <div class="featured-restaurant-info">
                                                             <span class="red-clr">{{$vendor->address}}</span>

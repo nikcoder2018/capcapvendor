@@ -21,21 +21,21 @@ Route::get('/restaurants/{id}/details', 'VendorsController@details')->name('vend
 Route::get('/categories/{slug}','CategoriesController@index')->name('category');
 Route::get('/blogs', 'BlogsController@index')->name('blogs');
 Route::get('/blogs/{slug}', 'BlogsController@details')->name('blogs.details');
-
 Route::prefix('vendor')->group(function(){
-    Auth::routes();
+    Auth::routes(['verify' => true]);
 
-    Route::group(['middleware' => 'auth'], function(){
+    Route::group(['middleware' => 'verified'], function(){
         Route::get('profile','ProfileController@index')->name('vendors.profile');
+        Route::post('profile/update', 'ProfileController@update')->name('vendors.profile.update');
+
         Route::get('dashboard','UserPanelController@index')->name('vendors.dashboard');
 
         Route::resource('products', 'ProductsController')->names([
             'index' => 'vendors.products.index',
             'create' => 'vendors.products.create',
-            'store' => 'vendors.products.store'
+            'store' => 'vendors.products.store',
+            'show' => 'vendors.products.detail'
         ]);
-
-
     });
 });
 

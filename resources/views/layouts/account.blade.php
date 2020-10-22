@@ -12,7 +12,7 @@
 
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
     
-
+    <link rel="stylesheet" href="{{asset('plugins/sweetalert2/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/icons.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 
@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="{{asset('css/yellow-color.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 
+    <style>
+        .swal2-popup {
+            font-size: 1.6rem !important;
+        }
+    </style>
     @yield('stylesheets')
 </head>
 <body itemscope>
@@ -65,7 +70,7 @@
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/plugins.js')}}"></script>
-
+    <script src="{{asset('plugins/sweetalert2/dist/sweetalert2.min.js')}}"></script>
     @yield('plugins_js')
 
     <script src="{{asset('js/main.js')}}"></script>

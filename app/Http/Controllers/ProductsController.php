@@ -26,7 +26,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        
+        $data['products'] = Product::all();
+
+        return view('contents.products', $data);
     }
 
     /**
@@ -119,7 +121,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['product'] = Product::find($id);
+
+        return view('contents.products-detail', $data);
     }
 
     /**

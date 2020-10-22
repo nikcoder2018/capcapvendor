@@ -8,9 +8,13 @@ use App\User;
 use App\Product;
 class VendorsController extends Controller
 {
-    public function index(){
-        $data['vendors'] = User::all();
-
+    public function index(Request $request){
+        $data['search'] = $request->search;
+        if($request->search != null)
+            $data['vendors'] = User::where('vendor_name','like','%'.$request->search.'%')->get();
+        else 
+            $data['vendors'] = User::all();
+        
         return view('contents.restaurants', $data);
     }
 

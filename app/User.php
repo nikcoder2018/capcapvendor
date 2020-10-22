@@ -38,5 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
+    function profile(){
+        return $this->hasOne(Profile::class, 'vendor_id', 'id');
+    }
 }

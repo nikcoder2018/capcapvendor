@@ -173,13 +173,17 @@
                 processData:false,
                 success: function(resp){
                     if(resp.success){
-                        swal(resp.msg, {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: resp.msg,
                             icon: 'success'
                         }).then(()=>{
                             location.href = "{{route('vendors.products.index')}}";
                         });
                     }else{
-                        swal(resp.msg, {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: resp.msg,
                             icon: 'error'
                         });
                     }

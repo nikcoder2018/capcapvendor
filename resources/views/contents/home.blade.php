@@ -8,8 +8,8 @@
             <div class="restaurant-searching-inner">
                 <span>Delicious <i>Food</i> </span>
                 <h2 itemprop="headline">Order Delivery & Take-Out</h2>
-                <form class="restaurant-search-form2 brd-rd30">
-                    <input class="brd-rd30" type="text" placeholder="RESTAURANT NAME">
+                <form class="restaurant-search-form2 brd-rd30" action="{{route('vendors')}}" method="GET">
+                    <input class="brd-rd30" name="search" type="text" placeholder="RESTAURANT NAME">
                     <button class="brd-rd30 red-bg" type="submit">SEARCH</button>
                 </form>
             </div>
@@ -24,12 +24,26 @@
                 <div class="col-md-12 col-sm-12 col-lg-12">
                     <div class="top-restaurants-wrapper">
                         <ul class="restaurants-wrapper style2">
-                            <li class="wow bounceIn" data-wow-delay="0.2s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 1" itemprop="url"><img src="{{asset('images/resource/top-restaurant1.png')}}" alt="top-restaurant1.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.4s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 2" itemprop="url"><img src="{{asset('images/resource/top-restaurant2.png')}}" alt="top-restaurant2.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.6s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 3" itemprop="url"><img src="{{asset('images/resource/top-restaurant3.png')}}" alt="top-restaurant3.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="0.8s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 4" itemprop="url"><img src="{{asset('images/resource/top-restaurant4.png')}}" alt="top-restaurant4.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="1s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 5" itemprop="url"><img src="{{asset('images/resource/top-restaurant5.png')}}" alt="top-restaurant5.png" itemprop="image"></a></div></li>
-                            <li class="wow bounceIn" data-wow-delay="1.2s"><div class="top-restaurant"><a class="brd-rd50" href="#" title="Restaurant 5" itemprop="url"><img src="{{asset('images/resource/top-restaurant6.png')}}" alt="top-restaurant6.png" itemprop="image"></a></div></li>
+                            @php $delay = 0; @endphp
+                            @if(count($AppTopVendors) > 0)
+                                @foreach($AppTopVendors as $vendor)
+                                    <li class="wow bounceIn" data-wow-delay="{{$delay+=0.2}}s">
+                                        <div class="top-restaurant">
+                                            <a class="brd-rd50" href="#" title="Restaurant 1" itemprop="url">
+                                                @if($vendor->profile != null)
+                                                    @if($vendor->profile->avatar != null)
+                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                    @else 
+                                                        <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                    @endif
+                                                @else 
+                                                <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                @endif
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
