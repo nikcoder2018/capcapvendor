@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\LocationCity as City;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('contents.home');
+        $data['posts'] = Post::orderBy('created_at', 'desc')->take(3)->get();
+        $data['locations'] = City::with('country')->get();
+        return view('contents.home', $data);
     }
 }

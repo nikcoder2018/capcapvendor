@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/restaurants', 'VendorsController@index')->name('vendors');
 Route::get('/restaurants/{id}/details', 'VendorsController@details')->name('vendors.details');
-
+Route::get('/locations/getlocations', 'LocationsController@getLocations')->name('locations.all');
 Route::get('/categories/{slug}','CategoriesController@index')->name('category');
 Route::get('/blogs', 'BlogsController@index')->name('blogs');
 Route::get('/blogs/{slug}', 'BlogsController@details')->name('blogs.details');

@@ -1,5 +1,30 @@
 @extends('layouts.app')
 
+@section('stylesheets')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    .loading {
+        display: none;
+        width: 16px;
+        height: 16px;
+        background-image: url(loading.gif);
+        vertical-align: text-bottom;
+    }
+    /* autocomplete adds the ui-autocomplete-loading class to the textbox when it is _busy_, use general sibling combinator ingeniously */
+    #input-search.ui-autocomplete-loading ~ .loading {
+        display: inline-block;
+    }
+
+    .ui-front{
+        z-index: 1;
+    }
+
+    .restaurant-search-form2{
+        z-index: 2;
+    }
+
+</style>
+@endsection
 @section('content')
 <section>
     <div class="block blackish low-opacity">
@@ -9,7 +34,8 @@
                 <span>Delicious <i>Food</i> </span>
                 <h2 itemprop="headline">Order Delivery & Take-Out</h2>
                 <form class="restaurant-search-form2 brd-rd30" action="{{route('vendors')}}" method="GET">
-                    <input class="brd-rd30" name="search" type="text" placeholder="RESTAURANT NAME">
+                    <input class="brd-rd30" id="input-search" name="location" type="text" placeholder="Search for a Location">
+                    <span class="loading"></span>
                     <button class="brd-rd30 red-bg" type="submit">SEARCH</button>
                 </form>
             </div>
@@ -132,7 +158,7 @@
     </div>
 </section>
 
-<section>
+{{-- <section>
     <div class="block gray-bg top-padd210">
         <div class="container">
             <div class="row">
@@ -271,8 +297,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
+@if(count($posts) > 0)
 <section>
     <div class="block bottom-padd210">
         <div class="container">
@@ -286,51 +313,30 @@
                     </div>
                     <div class="remove-ext">
                         <div class="row">
+                            @foreach($posts as $post)
                             <div class="col-md-4 col-sm-6 col-lg-4">
                                 <div class="news-box wow fadeIn" data-wow-delay="0.2s">
                                     <div class="news-thumb">
-                                        <a class="brd-rd2" href="blog-detail-right-sidebar.html" title="" itemprop="url"><img src="assets/images/resource/news-img1.jpg" alt="news-img1.jpg" itemprop="image"></a>
+                                        <a class="brd-rd2" href="{{route('blogs.details',$post->slug)}}" title="" itemprop="url">
+                                            @if($post->thumbnail != '')
+                                                <img src="{{Storage::disk('admin')->url($post->thumbnail)}}" itemprop="image">
+                                            @else
+                                                <img src="{{asset('images/resource/news-img1.jpg')}}" itemprop="image">
+                                            @endif
+                                        </a>
                                         <div class="news-btns">
-                                            <a class="post-date red-bg" href="#" title="" itemprop="url">JUNE 14</a>
-                                            <a class="read-more" href="blog-detail-right-sidebar.html" itemprop="url">READ MORE</a>
+                                            <a class="post-date red-bg" href="{{route('blogs.details',$post->slug)}}" title="" itemprop="url">{{date('M d', strtotime($post->created_at))}}</a>
+                                            <a class="read-more" href="{{route('blogs.details',$post->slug)}}" itemprop="url">READ MORE</a>
                                         </div>
                                     </div>
                                     <div class="news-info">
-                                        <h4 itemprop="headline"><a href="blog-detail-right-sidebar.html" title="" itemprop="url">Floury Bakery is The Best Choice</a></h4>
-                                        <p itemprop="description">The only thing bad about the place was the time they .took to provide us with our food</p>
+                                        <h4 itemprop="headline"><a href="{{route('blogs.details',$post->slug)}}" title="" itemprop="url">{{$post->title}}</a></h4> <br>
+                                        {{substr(strip_tags($post->content), 0, 128)}}
+                                        @if(strlen(strip_tags($post->content)) > 128) ... @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-6 col-lg-4">
-                                <div class="news-box wow fadeIn" data-wow-delay="0.4s">
-                                    <div class="news-thumb">
-                                        <a class="brd-rd2" href="blog-detail-left-sidebar.html" title="" itemprop="url"><img src="assets/images/resource/news-img2.jpg" alt="news-img2.jpg" itemprop="image"></a>
-                                        <div class="news-btns">
-                                            <a class="post-date red-bg" href="#" title="" itemprop="url">AUGUST 14</a>
-                                            <a class="read-more" href="blog-detail-left-sidebar.html" itemprop="url">READ MORE</a>
-                                        </div>
-                                    </div>
-                                    <div class="news-info">
-                                        <h4 itemprop="headline"><a href="blog-detail-left-sidebar.html" title="" itemprop="url">Cras venenatis erat ac massa Ultricies</a></h4>
-                                        <p itemprop="description">The only thing bad about the place was the time they .took to provide us with our food</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-lg-4">
-                                <div class="news-box wow fadeIn" data-wow-delay="0.6s">
-                                    <div class="news-thumb">
-                                        <a class="brd-rd2" href="blog-detail.html" title="" itemprop="url"><img src="assets/images/resource/news-img3.jpg" alt="news-img3.jpg" itemprop="image"></a>
-                                        <div class="news-btns">
-                                            <a class="post-date red-bg" href="#" title="" itemprop="url">APRIL 14</a>
-                                            <a class="read-more" href="blog-detail.html" itemprop="url">READ MORE</a>
-                                        </div>
-                                    </div>
-                                    <div class="news-info">
-                                        <h4 itemprop="headline"><a href="blog-detail.html" title="" itemprop="url">Easy Homemade Shahi Tukda Recipe</a></h4>
-                                        <p itemprop="description">The only thing bad about the place was the time they .took to provide us with our food</p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -338,5 +344,35 @@
         </div>
     </div>
 </section>
+@endif
+@endsection
 
+@section('scripts')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function() {
+      $( "#input-search").autocomplete({
+        source: async function(request, response){
+            let data = await $.ajax({
+                url: "{{route('locations.all')}}",
+                dataType: "json",
+                data:{
+                    search: $( "#input-search").val()
+                },
+                type: "GET"
+            });
+            response($.map(data.locations, function(item){
+                return {
+                    label: item.country.name + ',' + item.name,
+                    value: item.country.name + ',' + item.name
+                };
+            }));
+        },
+        select: function(event, ui){
+            location.href = "restaurants?location="+ui.item.value;
+        }
+      });
+    });
+
+    </script>
 @endsection

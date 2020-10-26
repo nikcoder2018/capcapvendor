@@ -10,4 +10,8 @@ class Profile extends Model
     protected $fillable = ['vendor_id', 'avatar', 'location', 'delivery', 'about', 'facebook', 'instagram', 'twitter', 'website'];
 
     public $timestamps = false;
+
+    function parentData(){
+        return $this->hasOne(User::class, 'vendor_id', 'id');
+    }
 }

@@ -9,11 +9,14 @@ use App\Product;
 class VendorsController extends Controller
 {
     public function index(Request $request){
-        $data['search'] = $request->search;
-        if($request->search != null)
-            $data['vendors'] = User::where('vendor_name','like','%'.$request->search.'%')->get();
-        else 
-            $data['vendors'] = User::all();
+        $location = explode(',',$request->location);
+        $country = $location[0];
+        $city = $location[1];
+        
+        $data['location'] = $request->location;
+        $data['vendors'] = User::with('profile')->where('city', $city)->orWhere('country', $country)->get();
+        
+        #return response()->json($data); exit;
         
         return view('contents.restaurants', $data);
     }

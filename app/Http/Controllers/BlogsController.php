@@ -7,7 +7,9 @@ use App\Post;
 class BlogsController extends Controller
 {
     public function index(){
-        $data['blogs'] = Post::all();
+        $data['blogs'] = Post::paginate(5);
+
+        #return response()->json($data); exit;
         return view('contents.blogs', $data);
     }
 
