@@ -9,12 +9,16 @@ use App\Product;
 class VendorsController extends Controller
 {
     public function index(Request $request){
-        $location = explode(',',$request->location);
-        $country = $location[0];
-        $city = $location[1];
-        
-        $data['location'] = $request->location;
-        $data['vendors'] = User::with('profile')->where('city', $city)->orWhere('country', $country)->get();
+        if($request->location){
+            $location = explode(',',$request->location);
+            $country = $location[0];
+            $city = $location[1];
+            $data['vendors'] = User::with('profile')->where('city', $city)->orWhere('country', $country)->get();
+            $data['location'] = $request->location;
+        }else{
+            $data['vendors'] = User::with('profile')->get();
+            $data['location'] = '';
+        }
         
         #return response()->json($data); exit;
         

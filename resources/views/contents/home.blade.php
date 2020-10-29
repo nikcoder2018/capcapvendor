@@ -116,39 +116,17 @@
                     <div class="localities-wrapper">
                         <div class="localities-inner brd-rd2 wow fadeInUp" data-wow-delay="0.2s">
                             <div class="row">
-                                <div class="col-md-4 col-sm-6 col-lg-4">
-                                    <ul class="locat-list">
-                                        <li>England <span>( 98 Places )</span></li>
-                                        <li>Berkshire <span>( 98 Places )</span></li>
-                                        <li>Bedfords <span>( 98 Places )</span></li>
-                                        <li>Scotland <span>( 98 Places )</span></li>
-                                        <li>Cambridges <span>( 98 Places )</span></li>
-                                        <li>London <span>( 98 Places )</span></li>
-                                        <li>Canada <span>( 98 Places )</span></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-lg-4">
-                                    <ul class="locat-list">
-                                        <li>England <span>( 98 Places )</span></li>
-                                        <li>Berkshire <span>( 98 Places )</span></li>
-                                        <li>Bedfords <span>( 98 Places )</span></li>
-                                        <li>Scotland <span>( 98 Places )</span></li>
-                                        <li>Cambridges <span>( 98 Places )</span></li>
-                                        <li>London <span>( 98 Places )</span></li>
-                                        <li>Canada <span>( 98 Places )</span></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-lg-4">
-                                    <ul class="locat-list">
-                                        <li>England <span>( 98 Places )</span></li>
-                                        <li>Berkshire <span>( 98 Places )</span></li>
-                                        <li>Bedfords <span>( 98 Places )</span></li>
-                                        <li>Scotland <span>( 98 Places )</span></li>
-                                        <li>Cambridges <span>( 98 Places )</span></li>
-                                        <li>London <span>( 98 Places )</span></li>
-                                        <li>Canada <span>( 98 Places )</span></li>
-                                    </ul>
-                                </div>
+                                @foreach($locations as $location)
+                                    @if($loop->index < 3)
+                                    <div class="col-md-4 col-sm-6 col-lg-4">
+                                        <ul class="locat-list">
+                                            @foreach($location as $country)
+                                            <li>{{$country->name}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div><!-- Localities Wrapper -->
