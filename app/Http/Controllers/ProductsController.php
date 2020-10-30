@@ -26,8 +26,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::all();
-
+        $data['products'] = Product::paginate(10);
         return view('contents.products', $data);
     }
 
@@ -119,10 +118,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $slug)
     {
-        $data['product'] = Product::find($id);
-
+        $data['product'] = Product::with(['categories', 'tags'])->where('vendor_id', $id)->where('slug', $slug)->first();
         return view('contents.products-detail', $data);
     }
 

@@ -104,14 +104,14 @@
                                                     <div class="featured-restaurant-box wow fadeIn" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
                                                         <div class="featured-restaurant-thumb">
                                                             @if($product->image_url != '')
-                                                            <a href="food-detail.html" title="" itemprop="url"><img src="{{Storage::disk('admin')->url($product->image_url)}}" itemprop="image"></a>
+                                                            <a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url"><img src="{{Storage::disk('admin')->url($product->image_url)}}" itemprop="image"></a>
                                                             @else 
-                                                            <a href="food-detail.html" title="" itemprop="url"><img src="{{asset('images/resource/featured-restaurant-img1.jpg')}}" itemprop="image"></a>
+                                                            <a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url"><img src="{{asset('images/resource/featured-restaurant-img1.jpg')}}" itemprop="image"></a>
                                                             @endif
                                                         </div>
                                                         <div class="featured-restaurant-info">
                                                             <span class="red-clr">{{$product->vendor->vendor_name}}</span>
-                                                            <h4 itemprop="headline"><a href="food-detail.html" title="" itemprop="url">{{$product->title}}</a></h4>
+                                                            <h4 itemprop="headline"><a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url">{{$product->title}}</a></h4>
                                                             <span class="price">${{$product->regular_price}}</span>
     
                                                             <ul class="post-meta">

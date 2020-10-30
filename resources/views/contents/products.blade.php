@@ -15,22 +15,14 @@
                 <h4 itemprop="headline"><a href="#" title="" itemprop="url">{{$product->title}}</a></h4>
                 <p itemprop="description">{!!$product->description!!}</p> <br>
                 <span class="price">${{$product->regular_price}}</span>
-                <a class="brd-rd2" href="{{route('vendors.products.detail', $product->id)}}" title="" itemprop="url">Product Detail</a>
+                <a class="brd-rd2" href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url">Product Detail</a>
             </div>
         </div>
         @endforeach
     </div>
     <div class="pagination-wrapper text-center style2">
         <ul class="pagination justify-content-center">
-            <li class="page-item prev"><a class="page-link brd-rd2" href="#" itemprop="url">PREV</a></li>
-            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">1</a></li>
-            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">2</a></li>
-            <li class="page-item active"><span class="page-link brd-rd2">3</span></li>
-            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">4</a></li>
-            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">5</a></li>
-            <li class="page-item">........</li>
-            <li class="page-item"><a class="page-link brd-rd2" href="#" itemprop="url">18</a></li>
-            <li class="page-item next"><a class="page-link brd-rd2" href="#" itemprop="url">NEXT</a></li>
+            @include('pagination.limit_links',['paginator'=>$products])
         </ul>
     </div><!-- Pagination Wrapper -->
     @else 

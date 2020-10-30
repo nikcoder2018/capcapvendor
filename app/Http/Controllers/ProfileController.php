@@ -19,6 +19,11 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request){
+        $vendor = Vendor::find($request->id);
+        $vendor->country = $request->country;
+        $vendor->city = $request->city; 
+        $vendor->save();
+        
         $profile = Profile::where('vendor_id', $request->id)->first();
 
         if($profile->exists()){
@@ -44,10 +49,6 @@ class ProfileController extends Controller
             }
             $profile->about = $request->about;
             $profile->phone = $request->phone;
-            $profile->country = $request->country;
-            $profile->state = $request->state;
-            $profile->city = $request->city;
-            $profile->location = implode(',',array($request->latitude, $request->longitude));
             $profile->save();
 
             if($profile)

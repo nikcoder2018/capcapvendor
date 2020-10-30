@@ -19,7 +19,33 @@
     <link rel="stylesheet" href="{{asset('css/red-color.css')}}">
     <link rel="stylesheet" href="{{asset('css/yellow-color.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .page-title-wrapper{
+            display: flex !important;
+            justify-content: center !important;
+        }
+        .loading {
+            display: none;
+            width: 16px;
+            height: 16px;
+            background-image: url(loading.gif);
+            vertical-align: text-bottom;
+        }
+        /* autocomplete adds the ui-autocomplete-loading class to the textbox when it is _busy_, use general sibling combinator ingeniously */
+        #input-search.ui-autocomplete-loading ~ .loading {
+            display: inline-block;
+        }
 
+        .ui-front{
+            z-index: 1;
+        }
+
+        .restaurant-search-form2{
+            z-index: 2;
+        }
+
+    </style>
     @yield('stylesheets')
 </head>
 <body itemscope>
@@ -39,7 +65,33 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/plugins.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+        $( "#input-search").autocomplete({
+            source: async function(request, response){
+                    let data = await $.ajax({
+                        url: "{{route('locations.all')}}",
+                        dataType: "json",
+                        data:{
+                            search: $( "#input-search").val()
+                        },
+                        type: "GET"
+                    });
+                    response($.map(data.locations, function(item){
+                        return {
+                            label: item.country.name + ',' + item.name,
+                            value: item.country.name + ',' + item.name
+                        };
+                    }));
+                },
+                select: function(event, ui){
+                    location.href = "restaurants?location="+ui.item.value;
+                }
+            });
+        });
 
+    </script>
     @yield('scripts')
 </body>	
 </html>

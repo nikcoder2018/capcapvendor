@@ -30,14 +30,14 @@ Route::prefix('vendor')->group(function(){
 
         Route::get('dashboard','UserPanelController@index')->name('vendors.dashboard');
 
-        Route::resource('products', 'ProductsController')->names([
+        Route::resource('products', 'ProductsController',['except' => ['show']])->names([
             'index' => 'vendors.products.index',
             'create' => 'vendors.products.create',
             'store' => 'vendors.products.store',
-            'show' => 'vendors.products.detail'
         ]);
     });
 });
+Route::get('/products/{vendor}/{slug}', 'ProductsController@show')->name('products.details');
 
 Route::get('test', function() {
     $storagePath = Storage::disk('admin')->url('products/_1599281135.png');
