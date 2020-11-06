@@ -55,21 +55,19 @@
                                 @foreach($AppTopVendors as $vendor)
                                     <li class="wow bounceIn" data-wow-delay="{{$delay+=0.2}}s">
                                         <div class="top-restaurant">
-                                            <a class="brd-rd50" href="{{route('vendors.details', $vendor->id)}}" title="{{$vendor->vendor_name}}" itemprop="url">
                                                 @if($vendor->profile != null)
                                                     @if($vendor->profile->avatar != null)
-                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{Storage::disk('admin')->url($vendor->profile->avatar)}});"></a>
                                                     @else 
-                                                        <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                     @endif
                                                 @else 
-                                                <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                    <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                 @endif
-                                            </a>
                                         </div>
                                     </li>
                                 @endforeach
-                            @endif                        
+                            @endif
                         </ul>
                     </div>
                         <div class="sec-wrapper top-padd80">

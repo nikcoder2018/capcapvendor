@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-filesystems.php
+/config/filesystems.php
 .env
 .env.backup
 .phpunit.result.cache
