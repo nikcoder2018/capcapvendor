@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
 use App\Category;
+use App\Setting;
 use App\User as Vendor;
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,7 +44,10 @@ class AppServiceProvider extends ServiceProvider
        
         $data = array(
             'AppCategories' => $categories,
-            'AppTopVendors' => Vendor::with('profile')->get()
+            'AppTopVendors' => Vendor::with('profile')->get(),
+            'AppHeaderScript' => Setting::where('name','header_scripts')->first()->value,
+            'AppFooterScript' => Setting::where('name','footer_scripts')->first()->value,
+            'AppBannerImg' => Setting::where('name','home_hero')->first()->value
         );
         View::share($data);
     }

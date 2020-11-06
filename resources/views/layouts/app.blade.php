@@ -7,12 +7,11 @@
     <meta name="keywords" content="" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    {!!$AppHeaderScript!!}
     <title>{{ config('app.name', 'CapCap') }}</title>
 
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
     
-
     <link rel="stylesheet" href="{{asset('css/icons.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
@@ -98,6 +97,9 @@
         });
 
     </script>
+
+    {!!$AppFooterScript!!}
+
     @yield('scripts')
 </body>	
 </html>

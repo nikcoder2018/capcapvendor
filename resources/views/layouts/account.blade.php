@@ -8,6 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {!!$AppHeaderScript!!}
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}" type="image/x-icon">
@@ -72,6 +74,8 @@
     <script src="{{asset('js/plugins.js')}}"></script>
     <script src="{{asset('plugins/sweetalert2/dist/sweetalert2.min.js')}}"></script>
     @yield('plugins_js')
+
+    {!!$AppFooterScript!!}
 
     <script src="{{asset('js/main.js')}}"></script>
 

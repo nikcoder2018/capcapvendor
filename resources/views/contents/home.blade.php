@@ -28,7 +28,7 @@
 @section('content')
 <section>
     <div class="block blackish low-opacity">
-        <div class="fixed-bg" style="background-image: url({{'images/parallax2.jpg'}});"></div>
+        <div class="fixed-bg" style="background-image: url(@if($AppBannerImg != '') {{Storage::disk('admin')->url($AppBannerImg)}} @else {{asset('images/parallax2.jpg')}} @endif);"></div>
         <div class="restaurant-searching style2 text-center">
             <div class="restaurant-searching-inner">
                 <span>Delicious <i>Food</i> </span>
