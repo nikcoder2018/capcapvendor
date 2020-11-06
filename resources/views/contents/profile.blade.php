@@ -1,5 +1,7 @@
 @extends('layouts.account')
-
+@section('stylesheets')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@endsection
 @section('content')
 <div class="tabs-wrp account-settings brd-rd5">
     <h4 itemprop="headline">PROFILE SETTINGS</h4>
@@ -42,24 +44,12 @@
                                 <input class="brd-rd3" name="phone" type="text" placeholder="Enter Your Phone No" value="{{isset($vendor->profile->phone) ? $vendor->profile->phone : ''}}">
                             </div>
                             <div class="col-md-12 col-sm-12 col-lg-12">
-                                <label>Country</label>
-                                <input class="brd-rd3" name="country" type="text" placeholder="Enter Your Country" value="{{isset($vendor->profile->country) ? $vendor->profile->country : ''}}">
+                                <label>Company Address</label>
+                                <input class="brd-rd3" name="address" type="text" placeholder="Enter Your Company Address" value="{{isset($vendor->profile->address) ? $vendor->profile->address : ''}}">
                             </div>
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <label>State</label>
-                                <input class="brd-rd3" name="state" type="text" placeholder="Enter Your State" value="{{isset($vendor->profile->state) ? $vendor->profile->state : ''}}">
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <label>City</label>
-                                <input class="brd-rd3" name="city" type="text" placeholder="Enter Your City" value="{{isset($vendor->profile->city) ? $vendor->profile->city : ''}}">
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <label>Location - Latitude</label>
-                                <input class="brd-rd3" name="latitude" type="text" value="{{isset($vendor->profile->location) ? explode(',',$vendor->profile->location)[0] : ''}}">
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-lg-6">
-                                <label>Location - Longitude</label>
-                                <input class="brd-rd3" name="longitude" type="text" value="{{isset($vendor->profile->location) ? explode(',',$vendor->profile->location)[0] : ''}}">
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <label>Delivery Locations</label>
+                                <input class="brd-rd3" name="location" type="text" placeholder="Search Location" value="{{$vendor->country}},{{$vendor->city}}">
                             </div>
                         </div>
                         <div class="row mrg20">
@@ -76,46 +66,68 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $('.profile-info-form').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data:  new FormData(this),
-                contentType: false,
-                cache: false,
-                processData:false,
-                success: function(resp){
-                    if(resp.success){
-                        Swal.fire({
-                            title: 'success',
-                            text: resp.msg,
-                            icon: 'success'
-                        }).then(()=>{
-                            location.href = "{{route('vendors.profile')}}";
-                        });
-                    }else{
-                        swal(resp.msg, {
-                            icon: 'error'
-                        });
-                    }
-                },
-                error: function(resp){
-                    let form = $('.profile-info-form');
-                    $.each(resp.responseJSON.errors, function(name, error){
-                        form.find('#input-'+name).siblings('.invalid-feedback').remove();
-                        form.find('#input-'+name).siblings('.valid-feedback').remove();
-                        form.find('#input-'+name).siblings('.invalid-feedback.valid-feedback').remove();
-                        form.find('#input-'+name).addClass('is-invalid');
-                        form.find('#input-'+name).after(`
-                            <div class="invalid-feedback">
-                            ${error}
-                            </div>
-                        `);
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $('.profile-info-form').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data:  new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(resp){
+                if(resp.success){
+                    Swal.fire({
+                        title: 'success',
+                        text: resp.msg,
+                        icon: 'success'
+                    }).then(()=>{
+                        location.href = "{{route('vendors.profile')}}";
+                    });
+                }else{
+                    swal(resp.msg, {
+                        icon: 'error'
                     });
                 }
-            });
+            },
+            error: function(resp){
+                let form = $('.profile-info-form');
+                $.each(resp.responseJSON.errors, function(name, error){
+                    form.find('#input-'+name).siblings('.invalid-feedback').remove();
+                    form.find('#input-'+name).siblings('.valid-feedback').remove();
+                    form.find('#input-'+name).siblings('.invalid-feedback.valid-feedback').remove();
+                    form.find('#input-'+name).addClass('is-invalid');
+                    form.find('#input-'+name).after(`
+                        <div class="invalid-feedback">
+                        ${error}
+                        </div>
+                    `);
+                });
+            }
         });
-    </script>
+    });
+    $( "input[name=location]").autocomplete({
+        source: async function(request, response){
+            let data = await $.ajax({
+                url: "{{route('locations.all')}}",
+                dataType: "json",
+                data:{
+                    search: $( "input[name=location]").val()
+                },
+                type: "GET"
+            });
+            response($.map(data.locations, function(item){
+                return {
+                    label: item.country.name + ',' + item.name,
+                    value: item.country.name + ',' + item.name
+                };
+            }));
+        },
+        minLength: 0
+      }).function(function(){
+            $(this).data("autocomplete").search($(this).val());
+      });
+</script>
 @endsection

@@ -14,4 +14,6 @@ class Profile extends Model
     function parentData(){
         return $this->hasOne(User::class, 'vendor_id', 'id');
     }
+
+    
 }

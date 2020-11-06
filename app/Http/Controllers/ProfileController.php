@@ -13,15 +13,16 @@ use App\Profile;
 class ProfileController extends Controller
 {
     public function index(){
-        $data['vendor'] = Vendor::where('id', auth()->user()->id)->with('profile')->first();
+        $data['vendor'] = Vendor::where('id', auth()->user()->id)->with(['profile'])->first();
         #return response()->json($data); exit;
         return view('contents.profile', $data);
     }
 
     public function update(Request $request){
         $vendor = Vendor::find($request->id);
-        $vendor->country = $request->country;
-        $vendor->city = $request->city; 
+        $location = explode(',',$request->location);
+        $vendor->country = $location[0];
+        $vendor->city = $location[1]; 
         $vendor->save();
         
         $profile = Profile::where('vendor_id', $request->id)->first();

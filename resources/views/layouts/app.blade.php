@@ -44,7 +44,13 @@
         .restaurant-search-form2{
             z-index: 2;
         }
-
+        .restaurants-wrapper.style2 .top-restaurant>a{
+            height: 165px;
+            line-height: 165px;
+            width: 165px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
     @yield('stylesheets')
 </head>

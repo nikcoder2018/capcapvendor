@@ -55,17 +55,15 @@
                                 @foreach($AppTopVendors as $vendor)
                                     <li class="wow bounceIn" data-wow-delay="{{$delay+=0.2}}s">
                                         <div class="top-restaurant">
-                                            <a class="brd-rd50" href="#" title="Restaurant 1" itemprop="url">
                                                 @if($vendor->profile != null)
                                                     @if($vendor->profile->avatar != null)
-                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{Storage::disk('admin')->url($vendor->profile->avatar)}});"></a>
                                                     @else 
-                                                        <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                     @endif
                                                 @else 
-                                                <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                    <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                 @endif
-                                            </a>
                                         </div>
                                     </li>
                                 @endforeach
@@ -121,7 +119,7 @@
                                     <div class="col-md-4 col-sm-6 col-lg-4">
                                         <ul class="locat-list">
                                             @foreach($location as $country)
-                                            <li>{{$country->name}}</li>
+                                            <li>{{$country->name}} ({{count($country->vendors)}})</li>
                                             @endforeach
                                         </ul>
                                     </div>

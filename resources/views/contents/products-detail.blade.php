@@ -1,5 +1,26 @@
 @extends('layouts.app')
-
+@section('stylesheets')
+<style>
+    .restaurants-button{
+        float: left;
+        font-size: 12px;
+        font-family: Poppins;
+        font-weight: 600;
+        letter-spacing: .1px;
+        background-color: #272727;
+        padding: 10.5px 20px;
+        margin-top: 20px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    .restaurants-button:hover{
+        color: #fff !important;
+    }
+    .restaurants-button:focus{
+        color: #fff !important;
+    }
+</style>
+@endsection
 @section('content')
 @include('includes.search-panel',['location' => ''])
 
@@ -21,7 +42,7 @@
                         <div class="sec-wrapper">
                             <div class="row">
                                 <div class="col-md-8 col-sm-12 col-lg-8">
-                                    <div class="restaurant-detail-wrapper">
+                                    <div class="">
                                         <div class="restaurant-detail-info">
                                             <div class="restaurant-detail-thumb">
                                                 <ul class="restaurant-detail-img-carousel">
@@ -42,7 +63,33 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-12 col-lg-4">
-                                    
+                                    <div class="featured-restaurant-box with-bg style2 brd-rd12 wow fadeIn" data-wow-delay="0.1s">
+                                        <div class="featured-restaurant-thumb">
+                                            <a href="{{route('vendors.details', $product->vendor->id)}}" title="" itemprop="url">
+                                                @if($product->vendor->profile != null)
+                                                    @if($product->vendor->profile->avatar != null)
+                                                        <img src="{{Storage::disk('admin')->url($product->vendor->profile->avatar)}}" itemprop="image">
+                                                    @else 
+                                                    <img src="{{asset('images/resource/most-popular-img1.png')}}" itemprop="image">                                                                    @endif
+                                                @else 
+                                                <img src="{{asset('images/resource/most-popular-img1.png')}}" itemprop="image">
+                                                @endif
+                                            </a>
+                                        </div>
+                                        <div class="featured-restaurant-info">
+                                            <span class="red-clr">{{$product->vendor->address}}</span>
+                                            <h4 itemprop="headline"><a href="{{route('vendors.details', $product->vendor->id)}}" title="" itemprop="url">{{$product->vendor->vendor_name}}</a></h4>
+                                            <span class="food-types">Type served: <a href="#" title="" itemprop="url">Apple Juice</a>, <a href="#" title="" itemprop="url">BB.Q</a></span>
+                                            <ul class="post-meta">
+                                                <li><i class="fa fa-check-circle-o"></i> Min order $50</li>
+                                                <li><i class="flaticon-transport"></i> 30min</li>
+                                                <li><i class="flaticon-money"></i> Accepts cash & online payments</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="brd-rd30 restaurants-button show-phone-number" href="javascript:void()" vendor-id="{{$product->vendor->id}}" phone-number="{{$product->vendor->profile->phone}}"><i class="fa fa-phone"></i> Show phone number</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +131,21 @@
 @endsection
 
 @section('scripts')
-    <script>
+<script>
+    $('.show-phone-number').on('click', function(){
+        let vendor_id = $(this).attr('vendor-id');
 
-    </script>
+        if($(this).hasClass('clicked')){
+            $(this).html('<i class="fa fa-phone"></i> Show phone number');
+            $(this).removeClass('clicked');
+        }else{
+            let phoneNumber = $(this).attr('phone-number');
+            $(this).text(phoneNumber);
+            $(this).addClass('clicked');
+
+            $.get("{{route('vendors.view_phone')}}",{vendor_id});
+        }
+        
+    });
+</script>
 @endsection

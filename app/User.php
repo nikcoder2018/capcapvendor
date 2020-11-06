@@ -41,4 +41,12 @@ class User extends Authenticatable
     function profile(){
         return $this->hasOne(Profile::class, 'vendor_id', 'id');
     }
+
+    function countryInfo(){
+        return $this->hasOne(LocationCountry::class, 'id', 'country');
+    }
+
+    function cityInfo(){
+        return $this->hasOne(LocationCity::class, 'id', 'city');
+    }
 }

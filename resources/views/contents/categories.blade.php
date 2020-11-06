@@ -19,7 +19,7 @@
                     <form class="restaurant-search-form brd-rd2" action="{{route('category', $category->slug)}}" method="GET">
                         <div class="row mrg10">
                             <div class="col-md-10 col-sm-9 col-lg-9 col-xs-12">
-                                <div class="input-field brd-rd2"><input class="brd-rd2" type="text" name="search" placeholder="Food Name" value="{{$search}}"></div>
+                                <div class="input-field brd-rd2"><input class="brd-rd2" type="text" name="search" placeholder="Food Name"></div>
                             </div>
                             <div class="col-md-2 col-sm-3 col-lg-3 col-xs-12">
                                 <button class="brd-rd2 red-bg" type="submit">SEARCH</button>
@@ -81,11 +81,11 @@
                                             <div class="widget-data">
                                                 <ul>
                                                     @if(count($AppCategories) > 0)
-                                                        @foreach($AppCategories as $category)
-                                                            @if(isset($category['parent']))
-                                                                <li><a href="{{route('category', $category['parent']['slug'])}}" title="" itemprop="url">{{$category['parent']['name']}}</a></li>
+                                                        @foreach($AppCategories as $cat)
+                                                            @if(isset($cat['parent']))
+                                                                <li><a href="{{route('category', $cat['parent']['slug'])}}" title="" itemprop="url">{{$cat['parent']['name']}}</a></li>
                                                             @else 
-                                                                <li><a href="{{route('category', $category->slug)}}" title="" itemprop="url">{{$category->slug}}</a></li>
+                                                                <li><a href="{{route('category', $cat->slug)}}" title="" itemprop="url">{{$cat->slug}}</a></li>
                                                             @endif
                                                         @endforeach
                                                     @endif
@@ -98,21 +98,21 @@
                                     <h3 class="marginb-0" itemprop="headline">{{$category->name}}</h3>
                                     <div class="remove-ext">
                                         <div class="row">
-                                            @if(count($products) > 0)
-                                                @foreach($products as $product)
+                                            @if(count($categoryProducts) > 0)
+                                                @foreach($categoryProducts as $categoryProduct)
                                                 <div class="col-md-6 col-sm-12 col-lg-6">
                                                     <div class="featured-restaurant-box wow fadeIn" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
                                                         <div class="featured-restaurant-thumb">
-                                                            @if($product->image_url != '')
-                                                            <a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url"><img src="{{Storage::disk('admin')->url($product->image_url)}}" itemprop="image"></a>
+                                                            @if($categoryProduct->product->image_url != '')
+                                                            <a href="{{route('products.details', ['vendor' => $categoryProduct->product->vendor_id, 'slug' => $categoryProduct->product->slug])}}" title="" itemprop="url"><img src="{{Storage::disk('admin')->url($categoryProduct->product->image_url)}}" itemprop="image"></a>
                                                             @else 
-                                                            <a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url"><img src="{{asset('images/resource/featured-restaurant-img1.jpg')}}" itemprop="image"></a>
+                                                            <a href="{{route('products.details', ['vendor' => $categoryProduct->product->vendor_id, 'slug' => $categoryProduct->product->slug])}}" title="" itemprop="url"><img src="{{asset('images/resource/featured-restaurant-img1.jpg')}}" itemprop="image"></a>
                                                             @endif
                                                         </div>
                                                         <div class="featured-restaurant-info">
-                                                            <span class="red-clr">{{$product->vendor->vendor_name}}</span>
-                                                            <h4 itemprop="headline"><a href="{{route('products.details', ['vendor' => $product->vendor_id, 'slug' => $product->slug])}}" title="" itemprop="url">{{$product->title}}</a></h4>
-                                                            <span class="price">${{$product->regular_price}}</span>
+                                                            <span class="red-clr">{{$categoryProduct->product->vendor->vendor_name}}</span>
+                                                            <h4 itemprop="headline"><a href="{{route('products.details', ['vendor' => $categoryProduct->product->vendor_id, 'slug' => $categoryProduct->product->slug])}}" title="" itemprop="url">{{$categoryProduct->product->title}}</a></h4>
+                                                            <span class="price">${{$categoryProduct->product->regular_price}}</span>
     
                                                             <ul class="post-meta">
                                                                 <li><i class="fa fa-check-circle-o"></i> Min order $50</li>

@@ -98,7 +98,7 @@
 </style>
 @endsection
 @section('content')
-<h4 itemprop="headline">Add product</h4>
+<h4 itemprop="headline">Edit product</h4>
 <div class="account-settings-inner">
     <div class="row">
         <div class="col-md-12">
@@ -129,23 +129,24 @@
                 <div class="row">
                     <div class="col-md-9 col-sm-12 col-lg-12">
                         <div class="reservation-tab-content">
-                            <form class="form-add-product" action="{{route('vendors.products.store')}}" method="POST">
+                            <form class="form-add-product" action="{{route('vendors.products.update')}}" method="POST">
                                 @csrf
+                                <input type="hidden" name="id" value="{{$product->id}}">
                                 <div class="tab-content">
                                     <div class="tab-pane fade active in" id="product-tab1">
                                         <div class="restaurant-info-form brd-rd5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                     <label>Product Title <sup>*</sup></label>
-                                                    <input class="brd-rd3" type="text" name="title" placeholder="E.g. Blue Jeans">
+                                                    <input class="brd-rd3" type="text" name="title" placeholder="E.g. Blue Jeans" value="{{$product->title}}">
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                     <label>Product Slug <sup>*</sup></label>
-                                                    <input class="brd-rd3" type="text" name="slug" placeholder="E.g. blue-jeans">
+                                                    <input class="brd-rd3" type="text" name="slug" placeholder="E.g. blue-jeans" value="{{$product->slug}}">
                                                 </div>
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Description</label>
-                                                    <textarea class="brd-rd3 summernote" cols="30" rows="10"></textarea>
+                                                    <textarea class="brd-rd3 summernote" cols="30" rows="10">{!!$product->description!!}</textarea>
                                                 </div>
 
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
@@ -154,7 +155,11 @@
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                     <div class="product-info text-center">
                                                         <div class="product-thumb">
+                                                            @if($product->image_url != '')
+                                                            <img id="profile-display" src="{{asset(Storage::disk('admin')->url($product->image_url))}}" itemprop="image">
+                                                            @else
                                                             <img id="profile-display" src="{{asset('images/resource/profile-img1.jpg')}}" itemprop="image">
+                                                            @endif
                                                         </div>
                                                         <div class="product-img-upload-btn">
                                                             <label class="fileContainer brd-rd5 yellow-bg">
@@ -202,14 +207,22 @@
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Price<sup>*</sup></label>
-                                                    <input class="brd-rd3" type="number" step="0.01" name="price" placeholder="Product Price">
+                                                    <input class="brd-rd3" type="number" step="0.01" name="price" placeholder="Product Price" value="{{$product->regular_price}}">
                                                 </div>
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Tags</label>
                                                     <div class="select-wrp">
                                                     <select name="tags" class="tags-input" multiple="multiple">
                                                         @foreach($tags as $tag)
-                                                            <option value="{{$tag->tag}}">{{$tag->tag}}</option>
+                                                            @php 
+                                                                $selected = '';
+                                                            @endphp 
+                                                            @foreach($product->tags as $ptag)
+                                                                @if($tag->tag == $ptag->tag)
+                                                                    @php $selected = 'selected'; @endphp
+                                                                @endif
+                                                            @endforeach
+                                                            <option value="{{$tag->tag}}" {{$selected}}>{{$tag->tag}}</option>
                                                         @endforeach
                                                     </select>
                                                     </div>
@@ -227,22 +240,21 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="check-box">
-                                                        <input type="checkbox" name="delivery" id="checkbox-delivery">
+                                                        <input type="checkbox" name="delivery" id="checkbox-delivery" @if($product->delivery == 1) checked @endif>
                                                         <label for="checkbox-delivery">Delivery</label>
                                                     </div>
-                                                    <div class="row location-input" style="display: none">
+                                                    <div class="row location-input" @if($product->delivery != 1) style="display: none" @endif>
                                                         <div class="col-md-6">
                                                             <label>Location</label>
-                                                            <input class="brd-rd3" type="text" id="input-location" name="delivery_location">
+                                                            <input class="brd-rd3" type="text" id="input-location" name="delivery_location" value="{{$product->delivery_location}}">
                                                         </div>
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="check-box">
-                                                        <input type="checkbox" name="take_away" id="checkbox-takeway">
+                                                        <input type="checkbox" name="take_away" id="checkbox-takeway" @if($product->take_away == 1) checked @endif>
                                                         <label for="checkbox-takeway">Take Away</label>
                                                     </div>
                                                 </div>

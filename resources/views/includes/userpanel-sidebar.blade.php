@@ -24,7 +24,10 @@
     <ul class="nav">
         <li class="{{ Request::segment(2) === 'dashboard' ?  'active' : null }}"><a href="{{route('vendors.dashboard')}}"><i class="fa fa-dashboard"></i> DASHBOARD</a></li>
         <li class="{{ Request::segment(2) === 'profile' ?  'active' : null }}"><a href="{{route('vendors.profile')}}"><i class="fa fa-user"></i> PROFILE</a></li>
+        <li class="{{ Request::segment(2) === 'statistics' ?  'active' : null }}"><a href="{{route('vendors.statistics')}}"><i class="fa fa-file-text"></i> STATISTICS</a></li>
         <li class="{{ Request::segment(2) === 'products' ?  'active' : null }}"><a href="{{route('vendors.products.index')}}"><i class="fa fa-file-text"></i> PRODUCTS</a></li>
-        <li class="{{ Request::segment(2) === 'settings' ?  'active' : null }}"><a href="#account-settings"><i class="fa fa-cog"></i> ACCOUNT SETTINGS</a></li>
+        <li class="{{ Request::segment(2) === 'notifications' ?  'active' : null }}"><a href="{{route('vendors.notifications')}}"><i class="fa fa-file-text"></i> NOTIFICATIONS</a></li>
+        <li class="{{ Request::segment(1) === 'faq' ?  'active' : null }}"><a href="{{route('faq')}}"><i class="fa fa-file-text"></i> FAQ</a></li>
+        <li class="{{ Request::segment(1) === 'pricing' ?  'active' : null }}"><a href="{{route('pricing')}}"><i class="fa fa-file-text"></i> UPGRADE </a></li>
     </ul>
 </div>

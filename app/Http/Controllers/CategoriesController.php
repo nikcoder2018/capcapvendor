@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
+use App\ProductCategory;
 class CategoriesController extends Controller
 {
     public function index(Request $request,$slug){
-        $data['search'] = $request->search;
-        $data['category'] = Category::where('slug',$slug)->first();
-
-        if($request->search != null)
-            $data['products'] =  Product::with(['categories','vendor','tags'])->where('title', 'like', '%'.$request->search.'%')->get();
-        else
-            $data['products'] =  Product::with(['categories','vendor','tags'])->get();
-
+        $category = Category::where('slug',$slug)->first();
+        $data['category'] = $category;
+        $data['categoryProducts'] =  ProductCategory::where('category_id',$category->id)->with('product')->get();
         #return response()->json($data); exit;
         return view('contents.categories', $data);
     }

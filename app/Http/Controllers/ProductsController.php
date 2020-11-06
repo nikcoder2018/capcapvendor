@@ -15,8 +15,11 @@ use Illuminate\Http\UploadedFile;
 use App\Product;
 use App\ProductTag;
 use App\ProductCategory;
+use App\ProductVisit;
 use App\Category;
 use App\Tag;
+
+use Carbon\Carbon;
 class ProductsController extends Controller
 {
     /**
@@ -26,7 +29,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::paginate(10);
+        $data['products'] = Product::with('categories')->paginate(10);
+
+        #return response()->json($data);
         return view('contents.products', $data);
     }
 
@@ -59,6 +64,20 @@ class ProductsController extends Controller
         $newProduct->slug = $request->slug;
         $newProduct->description = $request->description;
 
+        if($request->delivery == 'on'){
+            $newProduct->delivery = 1;
+            $newProduct->delivery_location = $request->delivery_location;
+        }else{
+            $newProduct->delivery = 0;
+            $newProduct->delivery_location = '';
+        }
+        
+        if($request->take_away == 'on'){
+            $newProduct->take_away = 1;
+        }else{
+            $newProduct->take_away = 0;
+        }
+        
         $slug = $this->slugify($validated['title']);
         if(!Product::where('slug', $slug)->exists()){
             $newProduct->slug = $slug;
@@ -66,7 +85,7 @@ class ProductsController extends Controller
             $newProduct->slug = $slug.'_'.time();
         }
    
-        $newProduct->regular_price = $validated['regular_price'];
+        $newProduct->regular_price = $validated['price'];
 
         if($request->hasFile('image')){
             if($request->file('image')->isValid()){
@@ -118,9 +137,24 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $slug)
+    public function show(Request $request, $id, $slug)
     {
-        $data['product'] = Product::with(['categories', 'tags'])->where('vendor_id', $id)->where('slug', $slug)->first();
+        $product = Product::with(['vendor','categories', 'tags'])->where('vendor_id', $id)->where('slug', $slug)->first();
+
+        //check if ip is already visited the link
+        $visits = ProductVisit::where('ip_address', $request->ip())->where('product_id', $product->id)->orderBy('date', 'DESC')->first();
+        
+        if($visits){
+            $diff = Carbon::parse(Carbon::now())->diffInDays($visits->date);
+            if($diff > 0){
+                $this->uniqVisitCounter($request->ip(),$product->id,$product->vendor_id, $request->server('HTTP_USER_AGENT'));
+            }
+        }else{
+            $this->uniqVisitCounter($request->ip(),$product->id,$product->vendor_id,$request->server('HTTP_USER_AGENT'));
+        }
+        $data['product'] = $product;
+
+        #return response()->json($data);
         return view('contents.products-detail', $data);
     }
 
@@ -132,7 +166,11 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['categories'] = Category::all();
+        $data['tags'] = Tag::all();
+        $data['categoriesHTML'] = Category::BuildTreeHTML2(Category::all()->toArray(), 0, ProductCategory::where('product_id', $id)->get());
+        $data['product'] = Product::with(['vendor','categories','tags'])->where('id',$id)->first();
+        return view('contents.products-edit', $data);
     }
 
     /**
@@ -142,9 +180,80 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $product = Product::find($request->id);
+        $product->title = $validated['title'];
+        $product->slug = $request->slug;
+        $product->description = $request->description;
+
+        if($request->delivery == 'on'){
+            $product->delivery = 1;
+            $product->delivery_location = $request->delivery_location;
+        }else{
+            $product->delivery = 0;
+            $product->delivery_location = '';
+        }
+        
+        if($request->take_away == 'on'){
+            $product->take_away = 1;
+        }else{
+            $product->take_away = 0;
+        }
+        
+
+        $slug = $this->slugify($validated['title']);
+        if(!Product::where('slug', $slug)->exists()){
+            $product->slug = $slug;
+        }else{
+            $product->slug = $slug.'_'.time();
+        }
+   
+        $product->regular_price = $validated['price'];
+
+        if($request->hasFile('image')){
+            if($request->file('image')->isValid()){
+                // Get image file
+                $image = $request->file('image');
+
+                // Make a image name based on user name and current timestamp
+                $name = Str::slug($request->input('title')).'_'.time();
+                $extension = $request->image->extension();
+                $upload = $request->file('image')->storeAs(
+                    'public/products', 
+                    $name.".".$extension,
+                    'admin'
+                );
+                $url = Storage::url('products/'.$name.".".$extension);
+
+                $product->image_url = $url;
+            }
+        }
+        
+        $product->save();
+        ProductTag::where('product_id', $product->id)->delete();
+        if($request->tags){
+            $tags = explode(',', $request->tags);
+
+            foreach($tags as $tag){
+                $newProductTag = new ProductTag;
+                $newProductTag->product_id = $product->id;
+                $newProductTag->tag = $tag;
+                $newProductTag->save();
+            }
+        }
+        ProductCategory::where('product_id', $product->id)->delete();
+        if($request->categories){
+            foreach($request->categories as $category){
+                $newProductCategory = new ProductCategory;
+                $newProductCategory->product_id = $product->id;
+                $newProductCategory->category_id = $category;
+                $newProductCategory->save();
+            }
+        }
+        return response()->json(array('success'=> true, 'msg' => 'Product successfully updated.'));
     }
 
     /**
@@ -153,9 +262,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $delete = Product::find($request->product_id)->delete();
+        if($delete)
+            return response()->json(array('success' => true, 'msg' => 'Product successfully deleted.'));
     }
 
     public function slugify($text){
@@ -182,5 +293,15 @@ class ProductsController extends Controller
         }
     
         return $text;
+    }
+
+    public function uniqVisitCounter($ip_address, $id, $vendor_id, $useragent){
+        $create = ProductVisit::create([
+            'ip_address' => $ip_address,
+            'product_id' => $id,
+            'vendor_id' => $vendor_id,
+            'user_agent' => $useragent,
+            'date' => date('Y-m-d H:i:s')
+        ]);
     }
 }

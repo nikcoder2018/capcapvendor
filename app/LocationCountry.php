@@ -11,6 +11,9 @@ class LocationCountry extends Model
 
     public $timestamps = false;
     
+    function vendors(){
+        return $this->hasMany(User::class, 'country', 'id');
+    }
     function cities(){
         return $this->hasMany(LocationCity::class, 'country', 'id');
     }

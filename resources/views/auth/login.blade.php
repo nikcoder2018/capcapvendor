@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+@section('stylesheets')
+    <style>
+        .display-center{
+            display: flex !important;
+            justify-content: center !important;
+        }
+    </style>
+@endsection
 @section('content')
 <section>
     <div class="block">
@@ -7,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-lg-12">
                     <div class="login-register-wrapper">
-                        <div class="row">
+                        <div class="row display-center">
                             <div class="col-md-6 col-sm-12 col-lg-6">
                                 <div class="sign-popup-wrapper brd-rd5">
                                     <div class="sign-popup-inner brd-rd5">
@@ -47,9 +54,6 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-lg-6">
-                                <
                             </div>
                         </div>
                     </div>

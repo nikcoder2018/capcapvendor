@@ -12,10 +12,9 @@ class ProductCategory extends Model
     public $timestamps = false;
 
     function product(){
-        return $this->belongsTo(Product::class, 'id', 'product_id');
+        return $this->hasOne(Product::class, 'id', 'product_id')->with('vendor');
     }
-
     function category(){
-        return $this->belongsTo(Category::class, 'id', 'category_id');
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 }

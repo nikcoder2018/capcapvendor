@@ -1,4 +1,26 @@
 @extends('layouts.app')
+@section('stylesheets')
+<style>
+    .restaurants-button{
+        float: left;
+        font-size: 12px;
+        font-family: Poppins;
+        font-weight: 600;
+        letter-spacing: .1px;
+        background-color: #272727;
+        padding: 10.5px 20px;
+        margin-top: 20px;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    .restaurants-button:hover{
+        color: #fff !important;
+    }
+    .restaurants-button:focus{
+        color: #fff !important;
+    }
+</style>
+@endsection
 @section('content')
 @include('includes.search-panel', ['location' => $location])
 
@@ -25,21 +47,19 @@
                                 @foreach($AppTopVendors as $vendor)
                                     <li class="wow bounceIn" data-wow-delay="{{$delay+=0.2}}s">
                                         <div class="top-restaurant">
-                                            <a class="brd-rd50" href="{{route('vendors.details', $vendor->id)}}" title="{{$vendor->vendor_name}}" itemprop="url">
                                                 @if($vendor->profile != null)
                                                     @if($vendor->profile->avatar != null)
-                                                        <img src="{{Storage::disk('admin')->url($vendor->profile->avatar)}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{Storage::disk('admin')->url($vendor->profile->avatar)}});"></a>
                                                     @else 
-                                                        <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                        <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                     @endif
                                                 @else 
-                                                <img src="{{asset('images/resource/top-restaurant1.png')}}" itemprop="image">
+                                                    <a class="brd-rd50" href="#" title="{{$vendor->vendor_name}}" itemprop="url" style="background-image:url({{asset('images/resource/top-restaurant1.png')}});"></a>
                                                 @endif
-                                            </a>
                                         </div>
                                     </li>
                                 @endforeach
-                            @endif                        
+                            @endif
                         </ul>
                     </div>
                         <div class="sec-wrapper top-padd80">
@@ -105,7 +125,10 @@
                                                                 <li><i class="flaticon-transport"></i> 30min</li>
                                                                 <li><i class="flaticon-money"></i> Accepts cash & online payments</li>
                                                             </ul>
-                                                            <a class="brd-rd30" href="{{route('vendors.details', $vendor->id)}}" title="Order Online"><i class="fa fa-angle-double-right"></i> Visit Store</a>
+                                                            <div>
+                                                                <a class="brd-rd30 restaurants-button show-phone-number" href="javascript:void()" vendor-id="{{$vendor->id}}" phone-number="{{$vendor->profile->phone}}"><i class="fa fa-phone"></i> Show phone number</a>
+                                                                <a class="brd-rd30 restaurants-button" href="{{route('vendors.details', $vendor->id)}}" title="Order Online"><i class="fa fa-angle-double-right"></i> Visit Store</a>    
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,3 +149,22 @@
 </section>
 @endsection
 
+@section('scripts')
+<script>
+    $('.show-phone-number').on('click', function(){
+        let vendor_id = $(this).attr('vendor-id');
+
+        if($(this).hasClass('clicked')){
+            $(this).html('<i class="fa fa-phone"></i> Show phone number');
+            $(this).removeClass('clicked');
+        }else{
+            let phoneNumber = $(this).attr('phone-number');
+            $(this).text(phoneNumber);
+            $(this).addClass('clicked');
+
+            $.get("{{route('vendors.view_phone')}}",{vendor_id});
+        }
+        
+    });
+</script>
+@endsection
