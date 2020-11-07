@@ -64,40 +64,7 @@
                     </div>
                         <div class="sec-wrapper top-padd80">
                             <div class="row">
-                                <div class="col-md-3 col-sm-5 col-lg-3">
-                                    <div class="sidebar">
-                                        <div class="widget style2 Search_filters">
-                                            <h4 class="widget-title2 sudo-bg-red" itemprop="headline">Search Filters</h4>
-                                            <div class="widget-data">
-                                                <ul>
-                                                    <li><a href="#" title="" itemprop="url">Fast Food</a> <span>30</span></li>
-                                                    <li><a href="#" title="" itemprop="url">North Indian</a> <span>28</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Chinese</a> <span>25</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Bakery</a> <span>11</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Mughlai</a> <span>7</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Pizza</a> <span>6</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Ice Cream</a> <span>6</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Rolls</a> <span>6</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Cafe</a> <span>5</span></li>
-                                                    <li><a href="#" title="" itemprop="url">Italian</a> <span>5</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="widget style2 quick_filters">
-                                            <h4 class="widget-title2 sudo-bg-red" itemprop="headline">Quick Filters</h4>
-                                            <div class="widget-data">
-                                                <ul>
-                                                    <li><span class="radio-box"><input type="radio" name="filter" id="filt1-1"><label for="filt1-1">Promotions</label></span></li>
-                                                    <li><span class="radio-box"><input type="radio" name="filter" id="filt1-2"><label for="filt1-2">Bookmarked</label></span></li>
-                                                    <li><span class="radio-box"><input type="radio" name="filter" id="filt1-3"><label for="filt1-3">Pure veg</label></span></li>
-                                                    <li><span class="radio-box"><input type="radio" name="filter" id="filt1-4"><label for="filt1-4">Free Delivery</label></span></li>
-                                                    <li><span class="radio-box"><input type="radio" name="filter" id="filt1-5"><label for="filt1-5">Online Payments</label></span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div><!--Sidebar -->
-                                </div>
-                                <div class="col-md-9 col-sm-12 col-lg-9">
+                                <div class="col-md-12 col-sm-12 col-lg-12">
                                     <div class="remove-ext">
                                         <div class="row">
                                             @if(count($vendors) > 0)

@@ -119,7 +119,7 @@
                                     <div class="col-md-4 col-sm-6 col-lg-4">
                                         <ul class="locat-list">
                                             @foreach($location as $country)
-                                            <li>{{$country->name}} ({{count($country->vendors)}})</li>
+                                            <li><a href="/restaurants?location={{$country->name}}">{{$country->name}} ({{count($country->vendors)}})</a></li>
                                             @endforeach
                                         </ul>
                                     </div>

@@ -25,7 +25,6 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'slug' => 'required|unique:products,slug,'.$this->id,
             'price' => 'required',
             'image' => 'mimes:jpeg,png|max:1014'
         ];

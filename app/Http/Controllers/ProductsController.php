@@ -61,7 +61,6 @@ class ProductsController extends Controller
         $newProduct = new Product();
         $newProduct->vendor_id = auth()->user()->id;
         $newProduct->title = $validated['title'];
-        $newProduct->slug = $request->slug;
         $newProduct->description = $request->description;
 
         if($request->delivery == 'on'){
@@ -186,7 +185,6 @@ class ProductsController extends Controller
 
         $product = Product::find($request->id);
         $product->title = $validated['title'];
-        $product->slug = $request->slug;
         $product->description = $request->description;
 
         if($request->delivery == 'on'){

@@ -15,8 +15,8 @@ class VendorsController extends Controller
     public function index(Request $request){
         if($request->location){
             $location = explode(',',$request->location);
-            $country = $location[0];
-            $city = $location[1];
+            $country = @$location[0];
+            $city = @$location[1];
             $data['vendors'] = User::with('profile')->where('city', $city)->orWhere('country', $country)->get();
             $data['location'] = $request->location;
         }else{

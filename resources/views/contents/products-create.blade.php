@@ -95,6 +95,118 @@
         letter-spacing: .3px;
         margin-bottom: 0;
     }
+
+    .tagsinput {
+    border: 1px solid #e3e6ed;
+    border-radius: 6px;
+    background: #fff;
+    height: 100px;
+    padding: 6px 1px 1px 6px;
+    overflow-y: auto;
+    text-align: left;
+}
+.tagsinput .tag {
+    border-radius: 4px;
+    background-color: #41cac0;
+    color: #ffffff;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    line-height: 15px;
+    padding: 6px 13px 8px 19px;
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    -webkit-transition: 0.14s linear;
+    -moz-transition: 0.14s linear;
+    -o-transition: 0.14s linear;
+    transition: 0.14s linear;
+    -webkit-backface-visibility: hidden;
+}
+.tagsinput .tag:hover {
+    background-color: #39b1a8;
+    color: #ffffff;
+    padding-left: 12px;
+    padding-right: 20px;
+}
+.tagsinput .tag:hover .tagsinput-remove-link {
+    color: #ffffff;
+    opacity: 1;
+    display: block\9;
+}
+.tagsinput input {
+    background: transparent;
+    border: none;
+    color: #34495e;
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    margin: 0px;
+    padding: 0 0 0 5px;
+    outline: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: inherit !important;
+    float: right !important;
+}
+.tagsinput-remove-link {
+    bottom: 0;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0;
+    padding: 7px 7px 5px 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    text-decoration: none;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    display: none\9;
+}
+.tagsinput-remove-link:before {
+    color: #ffffff;
+    content: "\f00d";
+    font-family: "FontAwesome";
+}
+.tagsinput-add-container {
+    vertical-align: middle;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+}
+.tagsinput-add {
+    background-color: #d6dbdf;
+    border-radius: 3px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 6px 9px;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    -o-transition: 0.25s;
+    transition: 0.25s;
+    -webkit-backface-visibility: hidden;
+}
+.tagsinput-add:hover {
+    background-color: #3bb8af;
+}
+.tagsinput-add:before {
+    content: "\f067";
+    font-family: "FontAwesome";
+}
+.tags_clear {
+    clear: both;
+    width: 100%;
+    height: 0px;
+}
+
 </style>
 @endsection
 @section('content')
@@ -138,10 +250,6 @@
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                     <label>Product Title <sup>*</sup></label>
                                                     <input class="brd-rd3" type="text" name="title" placeholder="E.g. Blue Jeans">
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-lg-12">
-                                                    <label>Product Slug <sup>*</sup></label>
-                                                    <input class="brd-rd3" type="text" name="slug" placeholder="E.g. blue-jeans">
                                                 </div>
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Description</label>
@@ -207,11 +315,11 @@
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Tags</label>
                                                     <div class="select-wrp">
-                                                    <select name="tags" class="tags-input" multiple="multiple">
+                                                        <input name="tags" id="tagsinput" class="tagsinput" value="" />
+                                                        <p class="mb-2 mt-3">Choose from your tags list:</p> <br>
                                                         @foreach($tags as $tag)
-                                                            <option value="{{$tag->tag}}">{{$tag->tag}}</option>
+                                                            <button type="button" data-id="{{$tag->id}}" data-tag="{{$tag->tag}}" class="btn btn-sm btn-primary btn-tag">{{$tag->tag}}</button>
                                                         @endforeach
-                                                    </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
@@ -272,31 +380,37 @@
 <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="{{asset('js/jquery.tagsinput.js')}}"></script>
 @endsection
 
 @section('scripts')
     <script>
-        $('.tags-input').select2({
-            theme: "classic"
+        $(".tagsinput").tagsInput();
+        $('.btn-tag').on('click', function(){
+            let tag = $(this).data('tag');
+            let tagsInput = $('#tagsinput');
+            if(!tagsInput.tagExist(tag)){
+                tagsInput.importTags(tagsInput.val()+','+tag);
+            }
         });
         $( "#input-location").autocomplete({
-        source: async function(request, response){
-            let data = await $.ajax({
-                url: "{{route('locations.all')}}",
-                dataType: "json",
-                data:{
-                    search: $( "#input-location").val()
-                },
-                type: "GET"
-            });
-            response($.map(data.locations, function(item){
-                return {
-                    label: item.country.name + ',' + item.name,
-                    value: item.country.name + ',' + item.name
-                };
-            }));
-        }
-      });
+            source: async function(request, response){
+                let data = await $.ajax({
+                    url: "{{route('locations.all')}}",
+                    dataType: "json",
+                    data:{
+                        search: $( "#input-location").val()
+                    },
+                    type: "GET"
+                });
+                response($.map(data.locations, function(item){
+                    return {
+                        label: item.country.name + ',' + item.name,
+                        value: item.country.name + ',' + item.name
+                    };
+                }));
+            }
+        });
 
         $('.form-add-product').on('submit', function(e){
             e.preventDefault();
@@ -343,20 +457,6 @@
             });
         });
 
-        $('.form-add-product').on('change keypress keyup', 'input[name=title]', async function(){
-            const slug = await $.ajax({
-                url: "{{route('slugify')}}",
-                type: "POST",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    text: $(this).val()
-                }
-            });
-
-            if(slug){
-                $('.form-add-product').find('input[name=slug]').val(slug);
-            }
-        });
         $('.form-add-product').on('change keypress', 'input', function(){
             $(this).removeClass("is-invalid is-valid");
             $(this).siblings('.invalid-feedback').remove();
@@ -374,6 +474,38 @@
 
         $('.step-buttons').on('click', 'a', function(){
             let tab = $(this).attr('tab');
+            if(tab == 'tab2'){
+                let title = $('input[name=title]').val();
+                if(title == ''){
+                    $('input[name=title]').siblings('.invalid-feedback').remove();
+                    $('input[name=title]').siblings('.valid-feedback').remove();
+                    $('input[name=title]').siblings('.invalid-feedback.valid-feedback').remove();
+                    $('input[name=title]').addClass('is-invalid');
+                    $('input[name=title]').before(`<div class="invalid-feedback" style="color:red">Product name is required</div>`);
+
+                    $('html, body').animate({
+                        scrollTop: $('#tab1').offset().top
+                    }, 300);
+
+                    return;
+                }
+            }
+            if(tab == 'tab3'){
+                let price = $('input[name=price]').val();
+                if(price == ''){
+                    $('input[name=price]').siblings('.invalid-feedback').remove();
+                    $('input[name=price]').siblings('.valid-feedback').remove();
+                    $('input[name=price]').siblings('.invalid-feedback.valid-feedback').remove();
+                    $('input[name=price]').addClass('is-invalid');
+                    $('input[name=price]').before(`<div class="invalid-feedback" style="color:red">Product price is required</div>`);
+
+                    $('html, body').animate({
+                        scrollTop: $('#tab2').offset().top
+                    }, 300);
+
+                    return;
+                }
+            }
             $('#'+tab).trigger('click');
             $('html, body').animate({
                 scrollTop: $('#'+tab).offset().top
