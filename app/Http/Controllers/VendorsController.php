@@ -17,7 +17,7 @@ class VendorsController extends Controller
             $location = explode(',',$request->location);
             $country = @$location[0];
             $city = @$location[1];
-            $data['vendors'] = User::with('profile')->where('city', $city)->orWhere('country', $country)->get();
+            $data['vendors'] = User::with('profile')->where('country', $country)->orWhere('city', $city)->get();
             $data['location'] = $request->location;
         }else{
             $data['vendors'] = User::with('profile')->get();
