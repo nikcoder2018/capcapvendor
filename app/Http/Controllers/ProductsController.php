@@ -29,7 +29,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::with('categories')->paginate(10);
+        $data['products'] = Product::with('categories')->where('vendor_id', auth()->user()->id)->paginate(10);
 
         #return response()->json($data);
         return view('contents.products', $data);
