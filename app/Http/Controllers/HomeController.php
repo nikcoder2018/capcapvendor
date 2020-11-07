@@ -34,7 +34,7 @@ class HomeController extends Controller
         foreach ($locations as $key => $row) {
             $sort[$key]  = $row['vendors'];
         }
-        
+       
         array_multisort($sort, SORT_DESC, $locations);
         $data['locations'] = array_chunk($locations, 7);
 
