@@ -50,6 +50,7 @@
         </ul>
     </div><!-- Pagination Wrapper -->
     @else 
+    <br>
     <p>You dont have any products yet</p>
     @endif
 
