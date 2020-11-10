@@ -538,7 +538,7 @@
                     $('html, body').animate({
                         scrollTop: $('#tab2').offset().top
                     }, 300);
-
+                    e.stopPropagation();
                     return;
                 }
         });
