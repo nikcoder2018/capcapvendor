@@ -510,7 +510,38 @@
                 scrollTop: $('#'+tab).offset().top
             }, 300);
         });
+        $('#tab2').on('click', function(){
+            let title = $('input[name=title]').val();
+                if(title == ''){
+                    $('input[name=title]').siblings('.invalid-feedback').remove();
+                    $('input[name=title]').siblings('.valid-feedback').remove();
+                    $('input[name=title]').siblings('.invalid-feedback.valid-feedback').remove();
+                    $('input[name=title]').addClass('is-invalid');
+                    $('input[name=title]').before(`<div class="invalid-feedback" style="color:red">Product name is required</div>`);
 
+                    $('html, body').animate({
+                        scrollTop: $('#tab1').offset().top
+                    }, 300);
+
+                    return;
+                }
+        });
+        $('#tab3').on('click', function(){
+            let price = $('input[name=price]').val();
+                if(price == ''){
+                    $('input[name=price]').siblings('.invalid-feedback').remove();
+                    $('input[name=price]').siblings('.valid-feedback').remove();
+                    $('input[name=price]').siblings('.invalid-feedback.valid-feedback').remove();
+                    $('input[name=price]').addClass('is-invalid');
+                    $('input[name=price]').before(`<div class="invalid-feedback" style="color:red">Product price is required</div>`);
+
+                    $('html, body').animate({
+                        scrollTop: $('#tab2').offset().top
+                    }, 300);
+
+                    return;
+                }
+        });
         $('#checkbox-delivery').on('change', function(){
             if($(this).prop('checked') == true){
                 $('.location-input').show();
