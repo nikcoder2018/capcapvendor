@@ -510,21 +510,21 @@
                 scrollTop: $('#'+tab).offset().top
             }, 300);
         });
-        $('#tab2').on('click', function(){
+        $('#tab2').on('click', function(e){
             let title = $('input[name=title]').val();
-                if(title == ''){
-                    $('input[name=title]').siblings('.invalid-feedback').remove();
-                    $('input[name=title]').siblings('.valid-feedback').remove();
-                    $('input[name=title]').siblings('.invalid-feedback.valid-feedback').remove();
-                    $('input[name=title]').addClass('is-invalid');
-                    $('input[name=title]').before(`<div class="invalid-feedback" style="color:red">Product name is required</div>`);
+            if(title == ''){
+                $('input[name=title]').siblings('.invalid-feedback').remove();
+                $('input[name=title]').siblings('.valid-feedback').remove();
+                $('input[name=title]').siblings('.invalid-feedback.valid-feedback').remove();
+                $('input[name=title]').addClass('is-invalid');
+                $('input[name=title]').before(`<div class="invalid-feedback" style="color:red">Product name is required</div>`);
 
-                    $('html, body').animate({
-                        scrollTop: $('#tab1').offset().top
-                    }, 300);
-
-                    return;
-                }
+                $('html, body').animate({
+                    scrollTop: $('#tab1').offset().top
+                }, 300);
+                e.stopPropagation();
+                return;
+            }
         });
         $('#tab3').on('click', function(){
             let price = $('input[name=price]').val();
