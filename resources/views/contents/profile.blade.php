@@ -2,6 +2,16 @@
 @section('stylesheets')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endsection
+@section('breadcrumbs')
+<div class="bread-crumbs-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+        </ol>
+    </div>
+</div>
+@endsection
 @section('content')
 <div class="tabs-wrp account-settings brd-rd5">
     <h4 itemprop="headline">PROFILE SETTINGS</h4>
@@ -108,6 +118,7 @@
             }
         });
     });
+
     $( "input[name=location]").autocomplete({
         source: async function(request, response){
             let data = await $.ajax({
@@ -125,9 +136,15 @@
                 };
             }));
         },
+        change: function (ev, ui) {
+            if (!ui.item) {
+                $(this).val('');
+            }
+        },
         minLength: 0
-      }).function(function(){
-            $(this).data("autocomplete").search($(this).val());
-      });
+    }).on('focus', function(event) {
+        var self = this;
+        $(self).autocomplete( "search", this.value);;
+    });
 </script>
 @endsection

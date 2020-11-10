@@ -209,6 +209,16 @@
 
 </style>
 @endsection
+@section('breadcrumbs')
+<div class="bread-crumbs-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+        </ol>
+    </div>
+</div>
+@endsection
 @section('content')
 <h4 itemprop="headline">Add product</h4>
 <div class="account-settings-inner">
@@ -253,7 +263,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-612 col-lg-12">
                                                     <label>Description</label>
-                                                    <textarea class="brd-rd3 summernote" cols="30" rows="10"></textarea>
+                                                    <textarea class="brd-rd3" name="description" cols="30" rows="10"></textarea>
                                                 </div>
 
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
@@ -377,7 +387,6 @@
 
 @section('plugins_js')
 <script src="{{asset('plugins/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
-<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="{{asset('js/jquery.tagsinput.js')}}"></script>
@@ -415,7 +424,6 @@
         $('.form-add-product').on('submit', function(e){
             e.preventDefault();
             let formData = new FormData(this);
-            formData.append('description', $(this).find('.summernote').summernote('code'));
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',
@@ -461,15 +469,6 @@
             $(this).removeClass("is-invalid is-valid");
             $(this).siblings('.invalid-feedback').remove();
             $(this).siblings('.valid-feedback').remove();
-        });
-
-        $('.summernote').summernote({
-            height: 250,                 // set editor height
-
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-
-            focus: true                 // set focus to editable area after initializing summernote
         });
 
         $('.step-buttons').on('click', 'a', function(){

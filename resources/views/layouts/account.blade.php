@@ -39,6 +39,11 @@
 
         @yield('breadcrumbs')
         <section>
+            <div class="block">
+                <div class="fixed-bg" style="background-image: url({{Storage::disk('admin')->url($AppDashboardBannerImg)}});"></div>
+            </div>
+        </section>
+        <section>
             <div class="block less-spacing gray-bg">
                 <div class="sec-box bottom-padd140">
                     <div class="container">

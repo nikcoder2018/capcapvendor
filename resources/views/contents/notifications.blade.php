@@ -1,5 +1,14 @@
 @extends('layouts.account')
-
+@section('breadcrumbs')
+<div class="bread-crumbs-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+        </ol>
+    </div>
+</div>
+@endsection
 @section('content')
 <div class="tabs-wrp account-settings brd-rd5">
     <h4 itemprop="headline">Notifications</h4>

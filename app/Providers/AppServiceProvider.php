@@ -47,7 +47,8 @@ class AppServiceProvider extends ServiceProvider
             'AppTopVendors' => Vendor::with('profile')->get(),
             'AppHeaderScript' => Setting::where('name','header_scripts')->first()->value,
             'AppFooterScript' => Setting::where('name','footer_scripts')->first()->value,
-            'AppBannerImg' => Setting::where('name','home_hero')->first()->value
+            'AppBannerImg' => Setting::where('name','home_hero')->first()->value,
+            'AppDashboardBannerImg' => Setting::where('name','dashboard_banner')->first()->value
         );
         View::share($data);
     }

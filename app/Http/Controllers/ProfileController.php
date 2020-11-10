@@ -50,6 +50,7 @@ class ProfileController extends Controller
             }
             $profile->about = $request->about;
             $profile->phone = $request->phone;
+            $profile->address = $request->address;
             $profile->save();
 
             if($profile)

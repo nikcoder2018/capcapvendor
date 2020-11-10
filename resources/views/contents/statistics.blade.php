@@ -3,6 +3,16 @@
 @section('stylesheets')
 <link rel="stylesheet" href="{{asset('plugins/chart.js/dist/Chart.min.css')}}" type="text/css">
 @endsection
+@section('breadcrumbs')
+<div class="bread-crumbs-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+        </ol>
+    </div>
+</div>
+@endsection
 @section('content')
 <div class="row">
     <div class="col-lg-12">

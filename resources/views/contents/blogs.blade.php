@@ -4,8 +4,8 @@
 <div class="bread-crumbs-wrapper">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Home</a></li>
-            <li class="breadcrumb-item active">Blog Grid</li>
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">Blogs</li>
         </ol>
     </div>
 </div>

@@ -38,9 +38,9 @@
 <div class="bread-crumbs-wrapper">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Home</a></li>
-            <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Search</a></li>
-            <li class="breadcrumb-item active">Food</li>
+            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Category</a></li>
+            <li class="breadcrumb-item active">{{$category->name}}</li>
         </ol>
     </div>
 </div>

@@ -45,10 +45,12 @@ Route::prefix('vendor')->group(function(){
         Route::get('view_phone', 'VendorsController@view_phone')->name('vendors.view_phone');
         Route::post('products/update', 'ProductsController@update')->name('vendors.products.update');
         Route::post('products/destroy', 'ProductsController@destroy')->name('vendors.products.destroy');
+        
+        Route::get('/faq', 'PagesController@faq')->name('faq');
+        Route::get('/pricing', 'PagesController@pricing')->name('pricing');
     });
 });
-Route::get('/faq', 'PagesController@faq')->name('faq');
-Route::get('/pricing', 'PagesController@pricing')->name('pricing');
+
 
 Route::get('/products/{vendor}/{slug}', 'ProductsController@show')->name('products.details');
 
