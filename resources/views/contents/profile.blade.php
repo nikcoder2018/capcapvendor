@@ -61,6 +61,28 @@
                                 <label>Delivery Locations</label>
                                 <input class="brd-rd3" name="location" type="text" placeholder="Search Location" value="{{$vendor->country}},{{$vendor->city}}">
                             </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <label>Payment Terms</label>
+                                <input class="brd-rd3" name="payment_terms" type="text" placeholder="Payment Terms" value="{{$vendor->profile->payment_terms}}">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <label>Order Terms</label>
+                                <input class="brd-rd3" name="order_terms" type="text" placeholder="Order Terms" value="{{$vendor->profile->order_terms}}">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12">
+                                <label>Type Served</label>
+                                <input class="brd-rd3" name="type_served" type="text" placeholder="Type Served" value="{{$vendor->profile->type_served}}">
+                            </div>
+                            <div class="col-md-12" style="display: flex; padding-bottom: 20px;">
+                                <span class="check-box" style="margin-right: 5px">
+                                    <input type="checkbox" id="checkbox1" @if($vendor->profile->dine_in_availabity == 1) checked @endif name="dine_in_availabity">
+                                    <label for="checkbox1">Dine-in Available</label>
+                                </span>
+                                <span class="check-box">
+                                    <input type="checkbox" name="take_away_availabity" @if($vendor->profile->take_away_availabity == 1) checked @endif id="checkbox2">
+                                    <label for="checkbox2">Take Away Available</label>
+                                </span>
+                            </div>
                         </div>
                         <div class="row mrg20">
                             <div class="col-md-12">

@@ -62,20 +62,6 @@ class ProductsController extends Controller
         $newProduct->vendor_id = auth()->user()->id;
         $newProduct->title = $validated['title'];
         $newProduct->description = $request->description;
-
-        if($request->delivery == 'on'){
-            $newProduct->delivery = 1;
-            $newProduct->delivery_location = $request->delivery_location;
-        }else{
-            $newProduct->delivery = 0;
-            $newProduct->delivery_location = '';
-        }
-        
-        if($request->take_away == 'on'){
-            $newProduct->take_away = 1;
-        }else{
-            $newProduct->take_away = 0;
-        }
         
         $slug = $this->slugify($validated['title']);
         if(!Product::where('slug', $slug)->exists()){
@@ -186,20 +172,6 @@ class ProductsController extends Controller
         $product = Product::find($request->id);
         $product->title = $validated['title'];
         $product->description = $request->description;
-
-        if($request->delivery == 'on'){
-            $product->delivery = 1;
-            $product->delivery_location = $request->delivery_location;
-        }else{
-            $product->delivery = 0;
-            $product->delivery_location = '';
-        }
-        
-        if($request->take_away == 'on'){
-            $product->take_away = 1;
-        }else{
-            $product->take_away = 0;
-        }
         
 
         $slug = $this->slugify($validated['title']);

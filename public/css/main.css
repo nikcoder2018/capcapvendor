@@ -7340,7 +7340,6 @@ html.thanks-message-popup-active .thanks-message {
     bottom: 0;
     right: 15px;
     z-index: -1;
-    opacity: .05;
 }
 
 .remove-noti {

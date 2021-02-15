@@ -24,15 +24,6 @@
 @section('content')
 @include('includes.search-panel', ['location' => $location])
 
-<div class="bread-crumbs-wrapper">
-    <div class="container">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('home')}}" title="" itemprop="url">Home</a></li>
-            <li class="breadcrumb-item active">Restaurants</li>
-        </ol>
-    </div>
-</div>
-
 <section>
     <div class="block gray-bg bottom-padd210">
         <div class="sec-box">
@@ -85,11 +76,10 @@
                                                         <div class="featured-restaurant-info">
                                                             <span class="red-clr">{{$vendor->address}}</span>
                                                             <h4 itemprop="headline"><a href="{{route('vendors.details', $vendor->id)}}" title="" itemprop="url">{{$vendor->vendor_name}}</a></h4>
-                                                            <span class="food-types">Type served: <a href="#" title="" itemprop="url">Apple Juice</a>, <a href="#" title="" itemprop="url">BB.Q</a></span>
+                                                            @if($vendor->profile->type_served != null)<span class="food-types">Type served: {{$vendor->profile->type_served}}</span>@endif
                                                             <ul class="post-meta">
-                                                                <li><i class="fa fa-check-circle-o"></i> Min order $50</li>
-                                                                <li><i class="flaticon-transport"></i> 30min</li>
-                                                                <li><i class="flaticon-money"></i> Accepts cash & online payments</li>
+                                                                @if($vendor->profile->order_terms != null)<li><i class="fa fa-check-circle-o"></i> {{$vendor->profile->order_terms}}</li>@endif
+                                                                @if($vendor->profile->payment_terms != null)<li><i class="flaticon-money"></i> {{$vendor->profile->payment_terms}}</li>@endif
                                                             </ul>
                                                             <div>
                                                                 <a class="brd-rd30 restaurants-button show-phone-number" href="javascript:void()" vendor-id="{{$vendor->id}}" phone-number="{{$vendor->profile->phone}}"><i class="fa fa-phone"></i> Show phone number</a>

@@ -342,29 +342,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="product-tab3">
                                         <div class="restaurant-info-form brd-rd5">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" name="delivery" id="checkbox-delivery">
-                                                        <label for="checkbox-delivery">Delivery</label>
-                                                    </div>
-                                                    <div class="row location-input" style="display: none">
-                                                        <div class="col-md-6">
-                                                            <label>Location</label>
-                                                            <input class="brd-rd3" type="text" id="input-location" name="delivery_location">
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" name="take_away" id="checkbox-takeway">
-                                                        <label for="checkbox-takeway">Take Away</label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-lg-12">
                                                     <div class="step-buttons">

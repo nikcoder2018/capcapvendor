@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
     public function index(){
         $data['vendor'] = Vendor::where('id', auth()->user()->id)->with(['profile'])->first();
-        #return response()->json($data); exit;
+        //return response()->json($data); exit;
         return view('contents.profile', $data);
     }
 
@@ -51,6 +51,12 @@ class ProfileController extends Controller
             $profile->about = $request->about;
             $profile->phone = $request->phone;
             $profile->address = $request->address;
+            $profile->payment_terms = $request->payment_terms;
+            $profile->order_terms = $request->order_terms;
+            $profile->type_served = $request->type_served;
+            $profile->dine_in_availabity = $request->dine_in_availabity == 'on' ? 1 : 0;
+            $profile->take_away_availabity = $request->take_away_availabity == 'on' ? 1 : 0;
+
             $profile->save();
 
             if($profile)

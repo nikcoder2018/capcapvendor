@@ -38,13 +38,7 @@
         @include('includes.header')
 
         @yield('breadcrumbs')
-        @if($AppDashboardBannerImg != '')
-        <section>
-            <div class="block">
-                <div class="fixed-bg" style="background-image: url({{Storage::disk('admin')->url($AppDashboardBannerImg)}});"></div>
-            </div>
-        </section>
-        @endif
+
         <section>
             <div class="block less-spacing gray-bg">
                 <div class="sec-box bottom-padd140">
