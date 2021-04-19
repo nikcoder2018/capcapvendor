@@ -20,9 +20,10 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $vendor = Vendor::find($request->id);
-        $location = explode(',',$request->location);
-        $vendor->country = $location[0];
-        $vendor->city = $location[1]; 
+        $location = explode(' • ',$request->location);
+        $vendor->region = $location[0];
+        $vendor->country = @$location[1];
+        $vendor->city = @$location[2]; 
         $vendor->save();
         
         $profile = Profile::where('vendor_id', $request->id)->first();

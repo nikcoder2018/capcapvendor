@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\LocationCity as City;
+use App\Location;
 use App\Profile as Profile;
 class LocationsController extends Controller
 {
@@ -11,7 +11,12 @@ class LocationsController extends Controller
         
     }
     public function getLocations(Request $request){
-        $data['locations'] = City::with('country')->where('name', 'like', $request->search.'%')->take(10)->get();
+        $search = $request->search;
+        $data['locations'] = Location::where(function($q) use($search) {
+            $q->orWhere('region','like', '%'.$search.'%');
+            $q->orWhere('country', 'like', '%'.$search.'%');
+            $q->orWhere('city', 'like', '%'.$search.'%');
+        })->orderBy('region','asc')->get();
 
         return response()->json($data);
     }

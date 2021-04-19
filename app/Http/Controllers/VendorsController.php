@@ -14,10 +14,20 @@ class VendorsController extends Controller
 {
     public function index(Request $request){
         if($request->location){
-            $location = explode(',',$request->location);
-            $country = @$location[0];
-            $city = @$location[1];
-            $data['vendors'] = User::with('profile')->where('country', $country)->orWhere('city', $city)->get();
+            $location = explode(' • ',$request->location);
+            
+            $data['vendors'] = User::with('profile')->where(function($q) use($location){
+                $region = @$location[0];
+                $country = @$location[1];
+                $city = @$location[2];
+
+                if($region != null)
+                    $q->orWhere('region','like', '%'.$region.'%');
+                if($country != null)
+                    $q->orWhere('country', 'like', '%'.$country.'%');
+                if($city != null)
+                    $q->orWhere('city', 'like', '%'.$city.'%');
+            })->get();
             $data['location'] = $request->location;
         }else{
             $data['vendors'] = User::with('profile')->get();

@@ -337,10 +337,20 @@
                 },
                 type: "GET"
             });
-            response($.map(data.locations, function(item){
+            response($.map(data.locations, function(location){
+                var loc = [];
+                if(location.region != null){
+                    loc.push(location.region);
+                }
+                if(location.country != null){
+                    loc.push(location.country);
+                }
+                if(location.city != null){
+                    loc.push(location.city);
+                }
                 return {
-                    label: item.country.name + ',' + item.name,
-                    value: item.country.name + ',' + item.name
+                    label: loc.join(' • '),
+                    value: loc.join(' • ')
                 };
             }));
         },

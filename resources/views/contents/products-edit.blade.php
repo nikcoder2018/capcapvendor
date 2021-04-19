@@ -402,6 +402,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="{{asset('js/jquery.tagsinput.js')}}"></script>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 @endsection
 
 @section('scripts')
@@ -504,6 +505,9 @@
             }else{
                 $('.location-input').hide();
             }
-        })
+        });
+
+        
+
     </script>
 @endsection

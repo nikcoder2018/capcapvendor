@@ -59,7 +59,16 @@
                             </div>
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <label>Delivery Locations</label>
-                                <input class="brd-rd3" name="location" type="text" placeholder="Search Location" value="{{$vendor->country}},{{$vendor->city}}">
+                                @php 
+                                    $location = array(); 
+                                    if($vendor->region != '')
+                                        array_push($location, $vendor->region);
+                                    if($vendor->country != '')
+                                        array_push($location, $vendor->country);
+                                    if($vendor->city != '')
+                                        array_push($location, $vendor->city);
+                                @endphp
+                                <input class="brd-rd3" name="location" type="text" placeholder="Search Location" value="{{join(' • ', $location)}}">
                             </div>
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <label>Payment Terms</label>
@@ -151,10 +160,20 @@
                 },
                 type: "GET"
             });
-            response($.map(data.locations, function(item){
+            response($.map(data.locations, function(location){
+                var loc = [];
+                if(location.region != null){
+                    loc.push(location.region);
+                }
+                if(location.country != null){
+                    loc.push(location.country);
+                }
+                if(location.city != null){
+                    loc.push(location.city);
+                }
                 return {
-                    label: item.country.name + ',' + item.name,
-                    value: item.country.name + ',' + item.name
+                    label: loc.join(' • '),
+                    value: loc.join(' • ')
                 };
             }));
         },
