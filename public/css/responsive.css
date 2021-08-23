@@ -444,7 +444,7 @@
         margin-top: 30px;
     }
     .profile-sidebar {
-        margin-bottom: 30px;
+        margin-bottom: 0;
     }
     .profile-sidebar-inner>ul>li {
         float: none;
@@ -525,6 +525,9 @@
 }
 
 @media (max-width:768px) {
+    .top-restaurants-wrapper {
+        display: none !important;
+    }
     .container {
         width: 95%;
     }

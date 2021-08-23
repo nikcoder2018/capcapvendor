@@ -408,6 +408,13 @@
 @section('scripts')
     <script>
         $(".tagsinput").tagsInput();
+        $('.btn-tag').on('click', function(){
+            let tag = $(this).data('tag');
+            let tagsInput = $('#tagsinput');
+            if(!tagsInput.tagExist(tag)){
+                tagsInput.importTags(tagsInput.val()+','+tag);
+            }
+        });
         $( "#input-location").autocomplete({
             source: async function(request, response){
                 let data = await $.ajax({

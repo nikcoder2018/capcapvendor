@@ -35,7 +35,7 @@
                         <td>
                             @if(count($product->categories) > 0)
                                 @foreach($product->categories as $category)
-                                    <span>{{$category->category->name}}</span>
+                                    <span class="badge">{{$category->category->name}}</span>
                                 @endforeach
                             @else 
                             <p>Uncategorized</p>

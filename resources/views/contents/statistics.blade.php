@@ -14,22 +14,16 @@
 </div>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <!--custom chart start-->
-        <div class="border-head">
-            <h3>Statistics</h3>
-        </div>
-        <div class="text-center" style="margin-bottom: 10px">
-            <button class="btn btn-primary btn-action" type="today">1 day</button>
-            <button class="btn btn-primary btn-action" type="daily">7 days</button>
-            <button class="btn btn-primary btn-action" type="weekly">1 Month</button>
-            <button class="btn btn-primary btn-action" type="monthly">12 Months</button>
-            <button class="btn btn-primary btn-action" type="yearly">All</button>
-        </div>
-        <canvas id="line" height="300" width="900"></canvas>
-        <!--custom chart end-->
+<div class="tabs-wrp">
+    <h4 itemprop="headline">Statistics</h4>
+    <div class="text-center" style="margin-bottom: 10px">
+        <button class="btn btn-primary btn-action" type="today">1 day</button>
+        <button class="btn btn-primary btn-action" type="daily">7 days</button>
+        <button class="btn btn-primary btn-action" type="weekly">1 Month</button>
+        <button class="btn btn-primary btn-action" type="monthly">12 Months</button>
+        <button class="btn btn-primary btn-action" type="yearly">All</button>
     </div>
+    <canvas id="line" height="300" width="900"></canvas>
 </div>
 @endsection
 

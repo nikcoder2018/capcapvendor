@@ -136,6 +136,16 @@ section {
     padding: 70px 0;
 }
 
+@media only screen and (max-width: 991px) {
+    .sec-box {
+        padding: 0 !important;
+    }
+    .less-spacing,
+    .block.less-spacing {
+        padding: 0 !important;
+    }
+}
+
 .top-padd80,
 .block.top-padd80 {
     padding-top: 80px;
@@ -7178,6 +7188,12 @@ html.thanks-message-popup-active .thanks-message {
 
 /*===== Profile Sidebar =====*/
 
+@media only screen and (max-width:991px) {
+    .profile-sidebar {
+        padding: 0 !important;
+    }
+}
+
 .profile-sidebar {
     float: left;
     width: 100%;
@@ -7436,6 +7452,12 @@ html.thanks-message-popup-active .thanks-message {
     width: 100%;
     background-color: #fbfbfb;
     padding: 50px;
+}
+
+@media only screen and (max-width: 768px) {
+    .tabs-wrp {
+        padding: 10px !important;
+    }
 }
 
 .tabs-wrp>h4 {

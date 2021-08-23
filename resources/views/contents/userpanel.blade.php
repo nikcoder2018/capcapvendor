@@ -10,27 +10,27 @@
     </div>
     <div class="remove-ext text-center">
         <div class="row" style="display: flex; justify-content:center">
-            <div class="col-md-4 col-sm-4 col-lg-3">
+            <div class="col col-md-4 col-lg-3 dashboard-stats">
                 <div class="step-box wow fadeIn" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
                     <i><img src="{{asset('images/product.png')}}" alt="setp-img1.png" itemprop="image"> <span class="brd-rd50 red-bg">{{$totalProducts}}</span></i>
                     <div class="setp-box-inner">
-                        <h5 itemprop="headline">Products</h5>
+                        <h5 itemprop="headline">Total Products</h5>
                     </div>
                 </div><!-- Step Box -->
             </div>
-            <div class="col-md-4 col-sm-4 col-lg-3">
+            <div class="col col-md-4 col-lg-3 dashboard-stats">
                 <div class="step-box wow fadeIn" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeIn;">
                     <i><img src="{{asset('images/phone.png')}}" alt="setp-img2.png" itemprop="image"> <span class="brd-rd50 red-bg">{{$totalPhoneViews}}</span></i>
                     <div class="setp-box-inner">
-                        <h5 itemprop="headline">Last 30 Days Phone Views</h5>
+                        <h5 itemprop="headline">Phone Views (30 Days)</h5>
                     </div>
                 </div><!-- Step Box -->
             </div>
-            <div class="col-md-4 col-sm-4 col-lg-3">
+            <div class="col col-md-4 col-lg-3 dashboard-stats">
                 <div class="step-box wow fadeIn" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeIn;">
                     <i><img src="{{asset('images/views.png')}}" alt="setp-img3.png" itemprop="image"> <span class="brd-rd50 red-bg">{{$totalProductVisits}}</span></i>
                     <div class="setp-box-inner">
-                        <h5 itemprop="headline">Last 30 Days Product Views</h5>
+                        <h5 itemprop="headline">Product Views (30 Days)</h5>
                     </div>
                 </div><!-- Step Box -->
             </div>

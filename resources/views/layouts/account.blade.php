@@ -29,6 +29,12 @@
         .swal2-popup {
             font-size: 1.6rem !important;
         }
+
+        @media only screen and (max-width:991px){
+            .dashboard-stats{
+                flex-basis: 100%;
+            }
+        }
     </style>
     @yield('stylesheets')
 </head>
